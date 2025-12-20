@@ -502,24 +502,16 @@
             <h2 class="section-title">Conoce Inspirarte</h2>
             <div style="max-width: 900px; margin: 0 auto; position: relative; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; background: #000;">
                 <!-- 
-                    Video local
-                    Coloca tu archivo de video en la carpeta "videos/"
-                    Formatos soportados: MP4, WebM, OGG
-                    Si tu video tiene otro nombre, cambia "inspirarte-video.mp4" por el nombre de tu archivo
+                    INSTRUCCIONES PARA AGREGAR TU VIDEO:
+                    
+                    OPCIÓN 1: YouTube (RECOMENDADO - El video es demasiado grande para GitHub)
+                    1. Sube tu video Inpirarte2025.mp4 a YouTube
+                    2. Copia el ID del video de la URL (ejemplo: youtube.com/watch?v=ABC123 -> ID es ABC123)
+                    3. Reemplaza "VIDEO_ID" abajo con tu ID de YouTube
+                    
+                    OPCIÓN 2: Video local (solo funciona en servidor propio, no en GitHub Pages)
+                    Si hosteas en otro lugar (Netlify, Vercel, servidor propio), puedes usar el video local
                 -->
-                <video 
-                    controls 
-                    style="width: 100%; height: auto; display: block;"
-                    poster="images/video-poster.jpg">
-                    <source src="videos/Inpirarte2025.mp4" type="video/mp4">
-                    Tu navegador no soporta la reproducción de video.
-                </video>
-                
-                <!-- 
-                    OPCIÓN ALTERNATIVA: Video de YouTube (comentado)
-                    Si prefieres usar YouTube, descomenta esto y comenta el video de arriba
-                -->
-                <!--
                 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
                     <iframe 
                         src="https://www.youtube.com/embed/VIDEO_ID" 
@@ -528,6 +520,19 @@
                         allowfullscreen>
                     </iframe>
                 </div>
+                
+                <!-- 
+                    OPCIÓN ALTERNATIVA: Video local (solo para servidores propios)
+                    Descomenta esto si hosteas en Netlify, Vercel o servidor propio
+                -->
+                <!--
+                <video 
+                    controls 
+                    style="width: 100%; height: auto; display: block;"
+                    poster="images/video-poster.jpg">
+                    <source src="videos/Inpirarte2025.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
                 -->
             </div>
         </div>
