@@ -1,0 +1,48 @@
+===========================================
+INSTRUCCIONES PARA AGREGAR GOOGLE FORMS
+===========================================
+
+PASO 1: Crear el formulario en Google Forms
+---------------------------------------------
+1. Ve a https://forms.google.com
+2. Inicia sesión con tu cuenta de Google
+3. Haz clic en "Formulario en blanco" o usa una plantilla
+4. Crea las preguntas que necesites (nombre, email, teléfono, clase, etc.)
+
+PASO 2: Obtener el código para insertar
+-----------------------------------------
+1. Una vez creado tu formulario, haz clic en el botón "Enviar" (arriba a la derecha)
+2. Se abrirá un menú con opciones de envío
+3. Haz clic en el ícono de "<>" (Insertar) que está en la parte superior del menú
+4. Se mostrará el código HTML del iframe
+5. Copia TODO el código que aparece
+
+PASO 3: Insertar el código en tu página web
+---------------------------------------------
+1. Abre el archivo index.html
+2. Busca la sección "<!-- Registration -->" o "#inscripciones"
+3. Encuentra el iframe que dice "https://docs.google.com/forms/d/e/1FAIpQLSdEXAMPLE/..."
+4. Reemplaza TODO ese iframe con el código que copiaste de Google Forms
+5. Guarda el archivo
+
+EJEMPLO DE CÓDIGO QUE OBTENDRÁS:
+---------------------------------
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdXXXXXXXXXXXXX/viewform?embedded=true" 
+        width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">
+    Cargando…
+</iframe>
+
+NOTAS IMPORTANTES:
+------------------
+- El formulario se adaptará automáticamente al diseño de tu página
+- Las respuestas se guardarán automáticamente en Google Sheets
+- Puedes ver las respuestas en Google Forms o en la hoja de cálculo asociada
+- El formulario funcionará en dispositivos móviles automáticamente
+
+¿NECESITAS AYUDA?
+-----------------
+Si tienes problemas, asegúrate de:
+- Que el formulario esté configurado como "Cualquiera con el enlace puede responder"
+- Que hayas copiado el código completo del iframe
+- Que el código esté dentro de la sección <div class="google-form-container">
+

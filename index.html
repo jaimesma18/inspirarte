@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inspirarte - Clases y Eventos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6B4E71;
+            --secondary-color: #C89F9C;
+            --accent-color: #F4E4C1;
+            --text-dark: #2C2C2C;
+            --text-light: #666;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo img {
+            height: 100px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--white);
+            padding: 150px 2rem 100px;
+            text-align: center;
+            margin-top: 70px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1.2s;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--accent-color);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1.4s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Sections */
+        section {
+            padding: 80px 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--secondary-color);
+            margin: 1rem auto;
+        }
+
+        /* Classes & Events */
+        .classes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .class-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .class-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .class-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .class-card .date {
+            color: var(--secondary-color);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .class-card .price {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        /* Google Form Container */
+        .google-form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--accent-color);
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .google-form-iframe {
+            width: 100%;
+            min-height: 2980px;
+            border: none;
+            border-radius: 10px;
+            background: var(--white);
+        }
+
+        @media (max-width: 768px) {
+            .google-form-container {
+                padding: 1rem;
+            }
+            
+            .google-form-iframe {
+                min-height: 2500px;
+            }
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            aspect-ratio: 1;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item img:not([src]),
+        .gallery-item img[src=""],
+        .gallery-item:not(:has(img[src])) {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(107, 78, 113, 0.3);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        /* FAQ */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary-color);
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: var(--accent-color);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s, padding 0.3s;
+            color: var(--text-light);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* About */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+        }
+
+        .about-image {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Social Media */
+        .social-media {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 60px 2rem;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: var(--white);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            text-decoration: none;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px) scale(1.1);
+            background: var(--accent-color);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: var(--white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: 0 10px 27px rgba(0,0,0,0.05);
+                padding: 2rem 0;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 60px 1.5rem;
+            }
+        }
+
+        /* Placeholder images */
+        .placeholder-img {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="images/logo.png" alt="Inspirarte Logo" id="logoImage" onerror="this.style.display='none'; document.getElementById('logoText').style.display='inline';">
+                <span id="logoText" style="display: none;">🎨 Inspirarte</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#clases">Clases</a></li>
+                <li><a href="#inscripciones">Inscripciones</a></li>
+                <li><a href="#galeria">Galería</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#about">Nosotros</a></li>
+                <li><a href="#social">Contacto</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <h1>Inspirarte 2026</h1>
+        <p>Bienvenidos a nuestro taller de arte y nuevo año 2026</p>
+        <p style="font-size: 1.1rem; margin-top: 1rem;">Trabajamos diferentes técnicas de dibujo, pintura y arte terapia para desarrollar la creatividad</p>
+        <a href="#inscripciones" class="btn">Inscríbete Ahora</a>
+    </section>
+
+    <!-- Video Section -->
+    <section id="video" style="padding: 80px 2rem; background: var(--white);">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="section-title">Conoce Inspirarte</h2>
+            <div style="max-width: 900px; margin: 0 auto; position: relative; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; background: #000;">
+                <!-- 
+                    Video local
+                    Coloca tu archivo de video en la carpeta "videos/"
+                    Formatos soportados: MP4, WebM, OGG
+                    Si tu video tiene otro nombre, cambia "inspirarte-video.mp4" por el nombre de tu archivo
+                -->
+                <video 
+                    controls 
+                    style="width: 100%; height: auto; display: block;"
+                    poster="images/video-poster.jpg">
+                    <source src="videos/Inpirarte2025.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+                
+                <!-- 
+                    OPCIÓN ALTERNATIVA: Video de YouTube (comentado)
+                    Si prefieres usar YouTube, descomenta esto y comenta el video de arriba
+                -->
+                <!--
+                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                    <iframe 
+                        src="https://www.youtube.com/embed/VIDEO_ID" 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Classes & Events -->
+    <section id="clases">
+        <h2 class="section-title">Clases y Horarios 2026</h2>
+        <div style="max-width: 800px; margin: 0 auto 3rem; text-align: center; padding: 2rem; background: var(--accent-color); border-radius: 15px;">
+            <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Costos</h3>
+            <p><strong>Matrícula:</strong> B/.100.00 (B/.80.00 pagando antes del 31 de diciembre 2025)</p>
+            <p style="margin-top: 1rem;"><strong>Mensualidades:</strong></p>
+            <ul style="text-align: left; display: inline-block; margin-top: 0.5rem; padding-left: 1.5rem;">
+                <li style="margin-bottom: 0.5rem;">Clases una vez por semana - 2 horas: <strong>B/.110.00</strong></li>
+                <li style="margin-bottom: 0.5rem;">Clases una vez por semana - 1 hora: <strong>B/.80.00</strong></li>
+                <li style="margin-bottom: 0.5rem;">Clases 2 veces por semana - 1 hora: <strong>B/.110.00</strong></li>
+                <li style="margin-bottom: 0.5rem;">Clases 2 veces por semana - 2 horas: <strong>B/.180.00</strong></li>
+                <li style="margin-bottom: 0.5rem;">Clases especiales o únicas: <strong>B/.35.00</strong> + materiales</li>
+            </ul>
+            <p style="margin-top: 1rem;"><strong>Descuento de hermanos: 10%</strong></p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">La libreta y materiales para pintar están incluidos en las clases de todos los niños desde los 4 años hasta los 15 años.</p>
+        </div>
+        <div class="classes-grid">
+            <div class="class-card">
+                <h3>Niños de 3 y 4 años</h3>
+                <p class="date">📅 Lunes, Martes, Miércoles o Jueves</p>
+                <p><strong>Horario:</strong> 3:00 PM - 4:00 PM</p>
+                <p>Clases especializadas para los más pequeños, trabajando motricidad fina y creatividad.</p>
+            </div>
+            <div class="class-card">
+                <h3>A partir de los 5 años</h3>
+                <p class="date">📅 Lunes a Jueves</p>
+                <p><strong>Horarios disponibles:</strong></p>
+                <p>4:00 PM - 6:00 PM</p>
+                <p>4:30 PM - 6:30 PM</p>
+                <p>Trabajan diferentes técnicas de dibujo, pintura y arte terapia.</p>
+            </div>
+            <div class="class-card">
+                <h3>Viernes - Punta Pacífica</h3>
+                <p class="date">📅 Viernes</p>
+                <p><strong>Horarios:</strong></p>
+                <p>2:00 PM - 4:00 PM</p>
+                <p>3:00 PM - 5:00 PM</p>
+            </div>
+            <div class="class-card">
+                <h3>Viernes - Santa María</h3>
+                <p class="date">📅 Viernes</p>
+                <p><strong>Horarios:</strong></p>
+                <p>3:00 PM - 5:00 PM</p>
+                <p>4:30 PM - 6:30 PM</p>
+            </div>
+            <div class="class-card">
+                <h3>Sábados</h3>
+                <p class="date">📅 Sábado</p>
+                <p><strong>Horario:</strong> 10:00 AM - 12:00 PM</p>
+                <p>Clases de fin de semana para todas las edades.</p>
+            </div>
+            <div class="class-card">
+                <h3>Muestra Anual de Inspirarte</h3>
+                <p class="date">📅 Fecha por confirmar</p>
+                <p>Exposición de trabajos de los alumnos de todas las edades. Los alumnos tendrán la opción de la venta de sus obras.</p>
+                <p class="price">Costo adicional: B/.50.00</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">No es de carácter obligatorio participar.</p>
+            </div>
+        </div>
+        <div style="max-width: 800px; margin: 3rem auto 0; text-align: center; padding: 1.5rem; background: var(--white); border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+            <p><strong>Inicio de clases:</strong> 2 de marzo de 2026</p>
+            <p><strong>Último día de clases:</strong> 23 de diciembre de 2026</p>
+        </div>
+        <div style="max-width: 800px; margin: 2rem auto 0; padding: 2rem; background: var(--white); border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+            <h3 style="color: var(--primary-color); margin-bottom: 1rem; text-align: center;">Días que Inspirarte estará cerrado en 2026</h3>
+            <ul style="text-align: left; display: inline-block; list-style: none; padding: 0;">
+                <li style="margin-bottom: 0.5rem;">📅 <strong>Viernes Santo y Pesaj:</strong> Jueves 2 - Viernes 3 - Sábado 4 de Abril</li>
+                <li style="margin-bottom: 0.5rem;">📅 <strong>Día del Trabajador:</strong> Viernes 1 de Mayo</li>
+                <li style="margin-bottom: 0.5rem;">📅 <strong>Rosh Hashana/Año nuevo Judío:</strong> Sábado 12 de Septiembre</li>
+                <li style="margin-bottom: 0.5rem;">📅 <strong>Ayuno de Yom Kipur:</strong> Lunes 21 de Septiembre</li>
+                <li style="margin-bottom: 0.5rem;">📅 <strong>Fiestas patrias:</strong> Martes 3 - Miércoles 4 - Jueves 5 de Noviembre</li>
+                <li style="margin-bottom: 0.5rem;">📅 <strong>Grito de la Villa de los Santos:</strong> Martes 10 de Noviembre</li>
+                <li style="margin-bottom: 0.5rem;">📅 <strong>Independencia Panamá de España:</strong> Sábado 28 de Noviembre</li>
+                <li style="margin-bottom: 0.5rem;">📅 <strong>Día de la Madre:</strong> Martes 8 de Diciembre</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Registration -->
+    <section id="inscripciones">
+        <h2 class="section-title">Inscripciones</h2>
+        <div class="google-form-container">
+            <!-- 
+                INSTRUCCIONES PARA AGREGAR TU GOOGLE FORM:
+                1. Crea tu formulario en Google Forms (forms.google.com)
+                2. Haz clic en "Enviar" (botón superior derecho)
+                3. Selecciona el ícono de "<>" (Insertar)
+                4. Copia el código HTML que aparece
+                5. Reemplaza el iframe de abajo con tu código
+                
+                Ejemplo de código que obtendrás:
+                <iframe src="https://docs.google.com/forms/d/e/.../viewform?embedded=true" 
+                        width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">
+                    Cargando…
+                </iframe>
+            -->
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScnpYcVioNZnP2BxA17yaHZYBLaaQZwcewgvY_6il0J7N1Skg/viewform?embedded=true" 
+                    width="100%" 
+                    height="2980" 
+                    frameborder="0" 
+                    marginheight="0" 
+                    marginwidth="0"
+                    class="google-form-iframe">
+                Loading…
+            </iframe>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="galeria">
+        <h2 class="section-title">Galería de Proyectos</h2>
+        <div class="gallery-grid">
+            <!-- 
+                INSTRUCCIONES PARA AGREGAR FOTOS:
+                1. Coloca tus imágenes en la carpeta "images/"
+                2. Reemplaza "proyecto1.jpg" con el nombre de tu imagen
+                3. Para agregar más fotos, copia y pega uno de estos bloques <div class="gallery-item">...</div>
+            -->
+            <div class="gallery-item">
+                <img src="images/proyecto1.jpg" alt="Proyecto 1">
+            </div>
+            <div class="gallery-item">
+                <img src="images/proyecto2.jpg" alt="Proyecto 2">
+            </div>
+            <div class="gallery-item">
+                <img src="images/proyecto3.jpg" alt="Proyecto 3">
+            </div>
+            <div class="gallery-item">
+                <img src="images/proyecto4.jpg" alt="Proyecto 4">
+            </div>
+            <div class="gallery-item">
+                <img src="images/proyecto5.jpg" alt="Proyecto 5">
+            </div>
+            <div class="gallery-item">
+                <img src="images/proyecto6.jpg" alt="Proyecto 6">
+            </div>
+            <div class="gallery-item">
+                <img src="images/proyecto7.jpg" alt="Proyecto 7">
+            </div>
+            <div class="gallery-item">
+                <img src="images/proyecto8.jpg" alt="Proyecto 8">
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <h2 class="section-title">Preguntas Frecuentes</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>¿Qué incluye la matrícula?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    La matrícula tiene un costo de B/.100.00 (B/.80.00 si pagas antes del 31 de diciembre 2025). El pago de la matrícula no es reembolsable. Si las clases comienzan después de agosto, el costo de la matrícula será de B/.50.00.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>¿Qué materiales están incluidos?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    La libreta y materiales para pintar están incluidos en las clases de todos los niños desde los 4 años hasta los 15 años. No incluye canvas, ni maderas o telas. Estos pueden adquirirlos en Inspirarte o traerlos del lugar que gusten.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>¿Cómo y cuándo debo pagar?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Los pagos de la mensualidad deben realizarse dentro de los primeros 10 días del mes, en caso contrario tendrá un recargo del 10%. La transferencia debe tener el nombre y apellido del artista en la descripción. Envía el comprobante al WhatsApp: 68001505 o por email a: inspirartepty@gmail.com
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>¿Puedo recuperar clases perdidas?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Sí, las clases se pueden recuperar en cualquier momento del año corriente siempre y cuando el o la alumna siga asistiendo a clases regulares. No se puede acumular clases perdidas y recuperarlas sin pagar el mes corriente.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>¿Qué pasa si mi hijo se retira de las clases?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    En caso de retiro permanente de las clases deben avisarnos la semana anterior para contar con el cupo libre, de lo contrario se cobrarán las clases hasta que seamos notificadas.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>¿Los meses se pagan aunque falte mi hijo?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Sí, los meses se pagan de forma regular de marzo a diciembre sin importar ausencias por viajes, enfermedad, etc. Las clases perdidas pueden recuperarse durante el año.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>¿Cómo puedo realizar los pagos?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Puedes realizar pagos a: Banco General - Cuenta de ahorro 0477988702020 (Ruth Apelblat) o por Yappy al 66130020 (Miriam Friedheim). Recuerda incluir el nombre y apellido del artista en la descripción.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>¿Hay descuentos disponibles?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Sí, ofrecemos un descuento del 10% para hermanos. También hay descuento en la matrícula si pagas antes del 31 de diciembre 2025 (B/.80.00 en lugar de B/.100.00).
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+        <h2 class="section-title">Sobre Nosotros</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Bienvenidos a Inspirarte, nuestro taller de arte para el año 2026.</p>
+                <p>En Inspirarte sus hijos trabajarán diferentes técnicas de dibujo, pintura con diferentes materiales y en diversos medios. Trabajarán motricidad fina y técnicas de arte terapia para desarrollar la creatividad, controlar la ansiedad y resolver problemas.</p>
+                <p>Nuestro enfoque está diseñado para niños desde los 3 años hasta los 15 años, adaptando las actividades según la edad y nivel de cada estudiante.</p>
+                <p>La libreta y materiales para pintar están incluidos en las clases de todos los niños desde los 4 años hasta los 15 años. Organizamos una muestra anual donde los alumnos pueden exponer y vender sus obras.</p>
+            </div>
+            <div class="about-image placeholder-img" style="height: 400px;">
+                Imagen del Taller
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media -->
+    <section class="social-media" id="social">
+        <h2 class="section-title" style="color: var(--white);">Síguenos en Redes Sociales</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 1rem;">Mantente al día con nuestros eventos, proyectos y noticias</p>
+        <div class="social-links">
+            <a href="https://www.facebook.com/InspirArtePTY/?locale=es_LA" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">📘</a>
+            <a href="https://www.instagram.com/inspirartepty/?hl=es" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">📷</a>
+        </div>
+        <div style="margin-top: 3rem;">
+            <p style="font-size: 1.1rem; margin-bottom: 1rem;">📧 Email: <a href="mailto:inspirartepty@gmail.com" style="color: var(--accent-color);">inspirartepty@gmail.com</a></p>
+            <p style="font-size: 1.1rem; margin-bottom: 1rem;">📱 WhatsApp: <a href="https://wa.me/50768001505" style="color: var(--accent-color);">68001505</a></p>
+            <p style="font-size: 1.1rem; margin-top: 2rem;"><strong>Formas de Pago:</strong></p>
+            <p style="font-size: 1rem;">🏦 Banco General - Cuenta: 0477988702020 (Ruth Apelblat)</p>
+            <p style="font-size: 1rem;">💳 Yappy: 66130020 (Miriam Friedheim)</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Inspirarte. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+
+        // Handle missing images in gallery
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            img.addEventListener('error', function() {
+                this.style.display = 'none';
+                const galleryItem = this.parentElement;
+                if (!galleryItem.querySelector('.placeholder-text')) {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'placeholder-text';
+                    placeholder.style.cssText = 'width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%); color: var(--primary-color); font-weight: bold; font-size: 1.2rem;';
+                    placeholder.textContent = this.alt || 'Imagen no disponible';
+                    galleryItem.appendChild(placeholder);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,38 @@
+===========================================
+INSTRUCCIONES PARA AGREGAR FOTOS A LA GALERÍA
+===========================================
+
+Para agregar fotos a la galería, sigue estos pasos:
+
+1. Coloca tus imágenes en esta carpeta (images/)
+   - Formatos recomendados: JPG, PNG, WebP
+   - Tamaño recomendado: 800x800px o similar (cuadradas funcionan mejor)
+
+2. Nombra tus imágenes siguiendo este formato:
+   - proyecto1.jpg
+   - proyecto2.jpg
+   - proyecto3.jpg
+   - etc.
+
+3. Si quieres agregar más fotos:
+   - Abre el archivo index.html
+   - Busca la sección "<!-- Gallery -->"
+   - Copia uno de los bloques de imagen y pégalo donde quieras
+   - Cambia el nombre del archivo (ej: proyecto9.jpg)
+
+4. Si prefieres usar nombres personalizados:
+   - Coloca tu imagen con el nombre que quieras (ej: "pintura-oleo.jpg")
+   - En index.html, cambia "images/proyecto1.jpg" por "images/pintura-oleo.jpg"
+
+5. Si la imagen no se encuentra, se mostrará un placeholder automáticamente.
+
+EJEMPLO DE CÓMO AGREGAR UNA NUEVA FOTO:
+
+En index.html, dentro de <div class="gallery-grid">, agrega:
+
+<div class="gallery-item">
+    <img src="images/tu-foto.jpg" alt="Descripción de tu proyecto">
+</div>
+
+¡Listo! Tu foto aparecerá en la galería.
+

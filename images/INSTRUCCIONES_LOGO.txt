@@ -1,0 +1,48 @@
+===========================================
+INSTRUCCIONES PARA AGREGAR TU LOGO
+===========================================
+
+OPCIÓN 1: Agregar tu logo como imagen
+--------------------------------------
+1. Coloca tu archivo de logo en la carpeta "images/"
+   - Formatos recomendados: PNG (con fondo transparente), SVG, JPG
+   - Tamaño recomendado: altura de 50-80px (el ancho se ajustará automáticamente)
+
+2. Nombra tu archivo como "logo.png" (o logo.jpg, logo.svg, etc.)
+
+3. Si tu logo tiene otro nombre, abre index.html y busca:
+   <img src="images/logo.png" alt="Inspirarte Logo"
+   
+   Cambia "logo.png" por el nombre de tu archivo, por ejemplo:
+   <img src="images/mi-logo.png" alt="Inspirarte Logo"
+
+4. Si no tienes logo, se mostrará el texto "🎨 Inspirarte" automáticamente
+
+OPCIÓN 2: Usar solo texto (como está ahora)
+--------------------------------------------
+Si prefieres mantener solo el texto, el logo actual ya funciona.
+Puedes cambiar el emoji o el texto editando la línea del logo en index.html
+
+FORMATOS RECOMENDADOS:
+----------------------
+- PNG con fondo transparente (mejor opción)
+- SVG (escalable, se ve bien en cualquier tamaño)
+- JPG (si no tienes fondo transparente)
+
+TAMAÑO RECOMENDADO:
+-------------------
+- Altura: 50-80 píxeles
+- El ancho se ajustará automáticamente
+- Si tu logo es muy grande, puedes redimensionarlo con cualquier editor de imágenes
+
+EJEMPLO:
+--------
+Si tu logo se llama "inspirarte-logo.png":
+1. Colócalo en la carpeta images/
+2. En index.html, cambia:
+   src="images/logo.png"
+   por:
+   src="images/inspirarte-logo.png"
+
+¡Listo! Tu logo aparecerá en la parte superior de la página.
+

@@ -1,0 +1,63 @@
+===========================================
+INSTRUCCIONES PARA AGREGAR UN VIDEO
+===========================================
+
+He agregado una sección de video en tu página web. Tienes 3 opciones:
+
+OPCIÓN 1: Video de YouTube (MÁS FÁCIL)
+--------------------------------------
+1. Sube tu video a YouTube
+2. Copia la URL del video (ejemplo: https://www.youtube.com/watch?v=abc123)
+3. Extrae el ID del video (en el ejemplo, el ID es "abc123")
+4. Abre index.html y busca la sección "<!-- Video Section -->"
+5. Encuentra esta línea:
+   <iframe src="https://www.youtube.com/embed/VIDEO_ID"
+6. Reemplaza "VIDEO_ID" con el ID de tu video
+   Ejemplo: <iframe src="https://www.youtube.com/embed/abc123"
+
+OPCIÓN 2: Video de Vimeo
+-------------------------
+1. Sube tu video a Vimeo
+2. Obtén el ID del video de la URL
+3. En index.html, comenta el iframe de YouTube (agrega <!-- al inicio y --> al final)
+4. Descomenta el iframe de Vimeo (quita <!-- y -->)
+5. Reemplaza "VIDEO_ID" con el ID de tu video de Vimeo
+
+OPCIÓN 3: Video Local (archivo en tu computadora)
+--------------------------------------------------
+1. Crea una carpeta "videos/" en tu proyecto (junto a la carpeta "images/")
+2. Coloca tu archivo de video allí (formatos: MP4, WebM)
+3. En index.html, comenta los iframes de YouTube/Vimeo
+4. Descomenta la sección del video local
+5. Cambia "videos/inspirarte-video.mp4" por el nombre de tu archivo
+6. (Opcional) Agrega una imagen de portada en "images/video-poster.jpg"
+
+EJEMPLO PRÁCTICO - YouTube:
+---------------------------
+Si tu video de YouTube es:
+https://www.youtube.com/watch?v=dQw4w9WgXcQ
+
+Entonces el ID es: dQw4w9WgXcQ
+
+Y deberías cambiar:
+<iframe src="https://www.youtube.com/embed/VIDEO_ID"
+
+Por:
+<iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+
+UBICACIÓN DEL VIDEO:
+-------------------
+El video aparece después de la sección principal (hero) y antes de las clases.
+
+Si quieres moverlo a otra ubicación, busca la sección:
+<!-- Video Section -->
+Y muévela donde prefieras.
+
+¿NECESITAS AYUDA?
+-----------------
+- Para YouTube: Solo necesitas el ID del video (la parte después de "v=" en la URL)
+- Para Vimeo: Similar a YouTube, busca el ID en la URL
+- Para video local: Asegúrate de que el archivo esté en la carpeta correcta
+
+¡Listo! Tu video aparecerá en la página web.
+
