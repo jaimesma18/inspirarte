@@ -502,16 +502,24 @@
             <h2 class="section-title">Conoce Inspirarte</h2>
             <div style="max-width: 900px; margin: 0 auto; position: relative; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; background: #000;">
                 <!-- 
-                    INSTRUCCIONES PARA AGREGAR TU VIDEO:
-                    
-                    OPCIÓN 1: YouTube (RECOMENDADO - El video es demasiado grande para GitHub)
-                    1. Sube tu video Inpirarte2025.mp4 a YouTube
-                    2. Copia el ID del video de la URL (ejemplo: youtube.com/watch?v=ABC123 -> ID es ABC123)
-                    3. Reemplaza "VIDEO_ID" abajo con tu ID de YouTube
-                    
-                    OPCIÓN 2: Video local (solo funciona en servidor propio, no en GitHub Pages)
-                    Si hosteas en otro lugar (Netlify, Vercel, servidor propio), puedes usar el video local
+                    Video local
+                    Coloca tu archivo de video en la carpeta "videos/"
+                    Formatos soportados: MP4, WebM, OGG
+                    Si tu video tiene otro nombre, cambia "inspirarte-video.mp4" por el nombre de tu archivo
                 -->
+                <video 
+                    controls 
+                    style="width: 100%; height: auto; display: block;"
+                    poster="images/video-poster.jpg">
+                    <source src="videos/Inpirarte2025.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+                
+                <!-- 
+                    OPCIÓN ALTERNATIVA: Video de YouTube (comentado)
+                    Si prefieres usar YouTube, descomenta esto y comenta el video de arriba
+                -->
+                <!--
                 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
                     <iframe 
                         src="https://www.youtube.com/embed/VIDEO_ID" 
@@ -520,19 +528,6 @@
                         allowfullscreen>
                     </iframe>
                 </div>
-                
-                <!-- 
-                    OPCIÓN ALTERNATIVA: Video local (solo para servidores propios)
-                    Descomenta esto si hosteas en Netlify, Vercel o servidor propio
-                -->
-                <!--
-                <video 
-                    controls 
-                    style="width: 100%; height: auto; display: block;"
-                    poster="images/video-poster.jpg">
-                    <source src="videos/Inpirarte2025.mp4" type="video/mp4">
-                    Tu navegador no soporta la reproducción de video.
-                </video>
                 -->
             </div>
         </div>
@@ -712,7 +707,7 @@
                     <span class="faq-icon">▼</span>
                 </div>
                 <div class="faq-answer">
-                    Los pagos de la mensualidad deben realizarse dentro de los primeros 10 días del mes, en caso contrario tendrá un recargo del 10%. La transferencia debe tener el nombre y apellido del artista en la descripción. Envía el comprobante por email a: inspirartepty@gmail.com
+                    Los pagos de la mensualidad deben realizarse dentro de los primeros 10 días del mes, en caso contrario tendrá un recargo del 10%. La transferencia debe tener el nombre y apellido del artista en la descripción. Envía el comprobante al WhatsApp: 68001505 o por email a: inspirartepty@gmail.com
                 </div>
             </div>
             <div class="faq-item">
@@ -740,6 +735,15 @@
                 </div>
                 <div class="faq-answer">
                     Sí, los meses se pagan de forma regular de marzo a diciembre sin importar ausencias por viajes, enfermedad, etc. Las clases perdidas pueden recuperarse durante el año.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>¿Cómo puedo realizar los pagos?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    Puedes realizar pagos a: Banco General - Cuenta de ahorro 0477988702020 (Ruth Apelblat) o por Yappy al 66130020 (Miriam Friedheim). Recuerda incluir el nombre y apellido del artista en la descripción.
                 </div>
             </div>
             <div class="faq-item">
@@ -780,6 +784,10 @@
         </div>
         <div style="margin-top: 3rem;">
             <p style="font-size: 1.1rem; margin-bottom: 1rem;">📧 Email: <a href="mailto:inspirartepty@gmail.com" style="color: var(--accent-color);">inspirartepty@gmail.com</a></p>
+            <p style="font-size: 1.1rem; margin-bottom: 1rem;">📱 WhatsApp: <a href="https://wa.me/50768001505" style="color: var(--accent-color);">68001505</a></p>
+            <p style="font-size: 1.1rem; margin-top: 2rem;"><strong>Formas de Pago:</strong></p>
+            <p style="font-size: 1rem;">🏦 Banco General - Cuenta: 0477988702020 (Ruth Apelblat)</p>
+            <p style="font-size: 1rem;">💳 Yappy: 66130020 (Miriam Friedheim)</p>
         </div>
     </section>
 

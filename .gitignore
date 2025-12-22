@@ -1,7 +1,0 @@
-# Excluir el video del repositorio (es demasiado grande para GitHub)
-videos/Inpirarte2025.mp4
-
-# Archivos de instrucciones (opcionales)
-*.txt
-!README.md
-
