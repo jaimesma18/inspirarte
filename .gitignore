@@ -1,0 +1,3 @@
+# Exclude videos directory (files too large for GitHub)
+videos/
+
