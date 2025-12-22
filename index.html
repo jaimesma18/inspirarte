@@ -45,6 +45,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 2rem;
+            gap: 2rem;
         }
 
         .logo {
@@ -196,32 +197,35 @@
             margin-top: 1rem;
         }
 
-        /* Google Form Container */
-        .google-form-container {
-            max-width: 800px;
+        /* WhatsApp Button */
+        .whatsapp-button-container {
+            max-width: 600px;
             margin: 0 auto;
-            padding: 2rem;
-            background: var(--accent-color);
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 3rem 2rem;
+            text-align: center;
         }
 
-        .google-form-iframe {
-            width: 100%;
-            min-height: 2980px;
-            border: none;
-            border-radius: 10px;
-            background: var(--white);
+        .whatsapp-btn {
+            display: inline-block;
+            padding: 18px 40px;
+            background: #25D366;
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
         }
 
-        @media (max-width: 768px) {
-            .google-form-container {
-                padding: 1rem;
-            }
-            
-            .google-form-iframe {
-                min-height: 2500px;
-            }
+        .whatsapp-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+        }
+
+        .whatsapp-btn::before {
+            content: '💬 ';
+            margin-right: 8px;
         }
 
         /* Gallery */
@@ -434,6 +438,10 @@
                 display: flex;
             }
 
+            .nav-container .btn {
+                display: none;
+            }
+
             .hero h1 {
                 font-size: 2.5rem;
             }
@@ -448,6 +456,16 @@
 
             section {
                 padding: 60px 1.5rem;
+            }
+
+            #clases > div > div,
+            #eventos > div > div,
+            #about > div > div {
+                grid-template-columns: 1fr !important;
+            }
+
+            #tecnicas > div > div {
+                grid-template-columns: repeat(2, 1fr) !important;
             }
         }
 
@@ -474,12 +492,16 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#clases">Clases</a></li>
+                <li><a href="#tecnicas">Técnicas</a></li>
+                <li><a href="#eventos">Eventos</a></li>
                 <li><a href="#inscripciones">Inscripciones</a></li>
                 <li><a href="#galeria">Galería</a></li>
-                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#team">Conoce al Team</a></li>
                 <li><a href="#about">Nosotros</a></li>
+                <li><a href="#faq">FAQ</a></li>
                 <li><a href="#social">Contacto</a></li>
             </ul>
+            <a href="#inscripciones" class="btn" style="background: #90C695; color: var(--white); padding: 10px 25px; font-size: 0.95rem;">Inscripciones 2026</a>
             <div class="menu-toggle" id="menuToggle">
                 <span></span>
                 <span></span>
@@ -490,10 +512,14 @@
 
     <!-- Hero Section -->
     <section class="hero" id="inicio">
-        <h1>Inspirarte 2026</h1>
-        <p>Bienvenidos a nuestro taller de arte y nuevo año 2026</p>
-        <p style="font-size: 1.1rem; margin-top: 1rem;">Trabajamos diferentes técnicas de dibujo, pintura y arte terapia para desarrollar la creatividad</p>
-        <a href="#inscripciones" class="btn">Inscríbete Ahora</a>
+        <div style="max-width: 1200px; margin: 0 auto; text-align: left; padding: 0 2rem;">
+            <h1 style="font-size: 3rem; margin-bottom: 1rem; display: inline-block;">
+                <span style="color: var(--white);">INSPIR</span><span style="color: #FF6B9D;">ARTE</span>
+            </h1>
+            <p style="font-size: 1.1rem; margin-top: 0.5rem; font-style: italic; color: rgba(255,255,255,0.9);">
+                "Donde la creatividad no tiene límites"
+            </p>
+        </div>
     </section>
 
     <!-- Video Section -->
@@ -533,112 +559,171 @@
         </div>
     </section>
 
-    <!-- Classes & Events -->
-    <section id="clases">
-        <h2 class="section-title">Clases y Horarios 2026</h2>
-        <div style="max-width: 800px; margin: 0 auto 3rem; text-align: center; padding: 2rem; background: var(--accent-color); border-radius: 15px;">
-            <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Costos</h3>
-            <p><strong>Matrícula:</strong> B/.100.00 (B/.80.00 pagando antes del 31 de diciembre 2025)</p>
-            <p style="margin-top: 1rem;"><strong>Mensualidades:</strong></p>
-            <ul style="text-align: left; display: inline-block; margin-top: 0.5rem; padding-left: 1.5rem;">
-                <li style="margin-bottom: 0.5rem;">Clases una vez por semana - 2 horas: <strong>B/.110.00</strong></li>
-                <li style="margin-bottom: 0.5rem;">Clases una vez por semana - 1 hora: <strong>B/.80.00</strong></li>
-                <li style="margin-bottom: 0.5rem;">Clases 2 veces por semana - 1 hora: <strong>B/.110.00</strong></li>
-                <li style="margin-bottom: 0.5rem;">Clases 2 veces por semana - 2 horas: <strong>B/.180.00</strong></li>
-                <li style="margin-bottom: 0.5rem;">Clases especiales o únicas: <strong>B/.35.00</strong> + materiales</li>
-            </ul>
-            <p style="margin-top: 1rem;"><strong>Descuento de hermanos: 10%</strong></p>
-            <p style="margin-top: 1rem; font-size: 0.9rem;">La libreta y materiales para pintar están incluidos en las clases de todos los niños desde los 4 años hasta los 15 años.</p>
-        </div>
-        <div class="classes-grid">
-            <div class="class-card">
-                <h3>Niños de 3 y 4 años</h3>
-                <p class="date">📅 Lunes, Martes, Miércoles o Jueves</p>
-                <p><strong>Horario:</strong> 3:00 PM - 4:00 PM</p>
-                <p>Clases especializadas para los más pequeños, trabajando motricidad fina y creatividad.</p>
-            </div>
-            <div class="class-card">
-                <h3>A partir de los 5 años</h3>
-                <p class="date">📅 Lunes a Jueves</p>
-                <p><strong>Horarios disponibles:</strong></p>
-                <p>4:00 PM - 6:00 PM</p>
-                <p>4:30 PM - 6:30 PM</p>
-                <p>Trabajan diferentes técnicas de dibujo, pintura y arte terapia.</p>
-            </div>
-            <div class="class-card">
-                <h3>Viernes - Punta Pacífica</h3>
-                <p class="date">📅 Viernes</p>
-                <p><strong>Horarios:</strong></p>
-                <p>2:00 PM - 4:00 PM</p>
-                <p>3:00 PM - 5:00 PM</p>
-            </div>
-            <div class="class-card">
-                <h3>Viernes - Santa María</h3>
-                <p class="date">📅 Viernes</p>
-                <p><strong>Horarios:</strong></p>
-                <p>3:00 PM - 5:00 PM</p>
-                <p>4:30 PM - 6:30 PM</p>
-            </div>
-            <div class="class-card">
-                <h3>Sábados</h3>
-                <p class="date">📅 Sábado</p>
-                <p><strong>Horario:</strong> 10:00 AM - 12:00 PM</p>
-                <p>Clases de fin de semana para todas las edades.</p>
-            </div>
-            <div class="class-card">
-                <h3>Muestra Anual de Inspirarte</h3>
-                <p class="date">📅 Fecha por confirmar</p>
-                <p>Exposición de trabajos de los alumnos de todas las edades. Los alumnos tendrán la opción de la venta de sus obras.</p>
-                <p class="price">Costo adicional: B/.50.00</p>
-                <p style="font-size: 0.9rem; margin-top: 0.5rem;">No es de carácter obligatorio participar.</p>
+    <!-- Classes -->
+    <section id="clases" style="background: var(--white);">
+        <h2 class="section-title" style="color: #90C695; text-align: left; max-width: 1200px; margin: 0 auto 2rem; padding: 0 2rem;">Clases</h2>
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; margin-bottom: 3rem;">
+                <div>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-dark); margin-bottom: 1.5rem;">
+                        Ofrecemos un modelo de enseñanza personalizado y abierto a todas las edades, donde:
+                    </p>
+                    <ul style="list-style: none; padding: 0; margin-bottom: 1.5rem;">
+                        <li style="margin-bottom: 1rem; font-size: 1.05rem; line-height: 1.6; color: var(--text-dark);">
+                            • Cada alumno trabaja en su propia obra.
+                        </li>
+                        <li style="margin-bottom: 1rem; font-size: 1.05rem; line-height: 1.6; color: var(--text-dark);">
+                            • Avanzas a tu propio ritmo, sin presiones ni comparaciones.
+                        </li>
+                        <li style="margin-bottom: 1rem; font-size: 1.05rem; line-height: 1.6; color: var(--text-dark);">
+                            • Recibes la atención individualizada de nuestros profesores para desarrollar tu técnica y estilo único.
+                        </li>
+                    </ul>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-dark); margin-bottom: 2rem; font-weight: 600;">
+                        ¡Empieza tu viaje artístico cuando quieras, como quieras!
+                    </p>
+                    <a href="https://wa.me/50768001505?text=Hola%2C%20quiero%20reservar%20una%20clase" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="btn" 
+                       style="background: #90C695; color: var(--white); padding: 15px 35px; font-size: 1.1rem;">
+                        Reserva tu clase
+                    </a>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px;"></div>
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px;"></div>
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px;"></div>
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px;"></div>
+                </div>
             </div>
         </div>
-        <div style="max-width: 800px; margin: 3rem auto 0; text-align: center; padding: 1.5rem; background: var(--white); border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
-            <p><strong>Inicio de clases:</strong> 2 de marzo de 2026</p>
-            <p><strong>Último día de clases:</strong> 23 de diciembre de 2026</p>
+    </section>
+
+    <!-- Techniques -->
+    <section id="tecnicas" style="background: linear-gradient(to bottom, var(--white) 0%, #f5f5f5 100%); padding-top: 40px;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
+            <h2 class="section-title" style="color: #4A4A4A; text-align: left; margin-bottom: 1rem;">
+                Técnicas
+                <span style="display: inline-block; width: 12px; height: 12px; background: #90C695; border-radius: 50%; margin-left: 10px;"></span>
+            </h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-dark); margin-bottom: 3rem; max-width: 800px;">
+                En este espacio podrás experimentar una inmensa cantidad de técnicas de arte diferentes
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem;">
+                <div style="text-align: center;">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem;"></div>
+                    <h3 style="color: var(--primary-color); font-size: 1.2rem;">Pintura acrílica</h3>
+                </div>
+                <div style="text-align: center;">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem;"></div>
+                    <h3 style="color: var(--primary-color); font-size: 1.2rem;">Óleo</h3>
+                </div>
+                <div style="text-align: center;">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem;"></div>
+                    <h3 style="color: var(--primary-color); font-size: 1.2rem;">Escultura</h3>
+                </div>
+                <div style="text-align: center;">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem;"></div>
+                    <h3 style="color: var(--primary-color); font-size: 1.2rem;">Cerámica</h3>
+                </div>
+                <div style="text-align: center;">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem;"></div>
+                    <h3 style="color: var(--primary-color); font-size: 1.2rem;">Resina</h3>
+                </div>
+                <div style="text-align: center;">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem;"></div>
+                    <h3 style="color: var(--primary-color); font-size: 1.2rem;">Acuarela</h3>
+                </div>
+            </div>
+            <p style="font-size: 1.2rem; color: var(--text-dark); text-align: center; font-weight: 600; margin-top: 2rem;">
+                y muchas más!
+            </p>
         </div>
-        <div style="max-width: 800px; margin: 2rem auto 0; padding: 2rem; background: var(--white); border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
-            <h3 style="color: var(--primary-color); margin-bottom: 1rem; text-align: center;">Días que Inspirarte estará cerrado en 2026</h3>
-            <ul style="text-align: left; display: inline-block; list-style: none; padding: 0;">
-                <li style="margin-bottom: 0.5rem;">📅 <strong>Viernes Santo y Pesaj:</strong> Jueves 2 - Viernes 3 - Sábado 4 de Abril</li>
-                <li style="margin-bottom: 0.5rem;">📅 <strong>Día del Trabajador:</strong> Viernes 1 de Mayo</li>
-                <li style="margin-bottom: 0.5rem;">📅 <strong>Rosh Hashana/Año nuevo Judío:</strong> Sábado 12 de Septiembre</li>
-                <li style="margin-bottom: 0.5rem;">📅 <strong>Ayuno de Yom Kipur:</strong> Lunes 21 de Septiembre</li>
-                <li style="margin-bottom: 0.5rem;">📅 <strong>Fiestas patrias:</strong> Martes 3 - Miércoles 4 - Jueves 5 de Noviembre</li>
-                <li style="margin-bottom: 0.5rem;">📅 <strong>Grito de la Villa de los Santos:</strong> Martes 10 de Noviembre</li>
-                <li style="margin-bottom: 0.5rem;">📅 <strong>Independencia Panamá de España:</strong> Sábado 28 de Noviembre</li>
-                <li style="margin-bottom: 0.5rem;">📅 <strong>Día de la Madre:</strong> Martes 8 de Diciembre</li>
-            </ul>
+    </section>
+
+    <!-- Events -->
+    <section id="eventos" style="background: #90C695; color: var(--white);">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
+                <div>
+                    <h2 class="section-title" style="color: var(--white); text-align: left; margin-bottom: 1rem;">Eventos</h2>
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem; font-weight: 600;">
+                        Experiencias creativas para celebrar
+                    </p>
+                    <ul style="list-style: none; padding: 0; margin-bottom: 2rem;">
+                        <li style="margin-bottom: 0.8rem; font-size: 1.1rem;">• Cumpleaños</li>
+                        <li style="margin-bottom: 0.8rem; font-size: 1.1rem;">• Corporativos 'Team Building'</li>
+                        <li style="margin-bottom: 0.8rem; font-size: 1.1rem;">• Baby Shower</li>
+                        <li style="margin-bottom: 0.8rem; font-size: 1.1rem;">• Eventos familiares</li>
+                        <li style="margin-bottom: 0.8rem; font-size: 1.1rem;">• "Arte con causa" para fundaciones</li>
+                        <li style="margin-bottom: 0.8rem; font-size: 1.1rem;">• Eventos Neón</li>
+                        <li style="margin-bottom: 0.8rem; font-size: 1.1rem;">• Murales</li>
+                    </ul>
+                    <p style="font-size: 1.1rem; margin-bottom: 2rem; font-style: italic;">
+                        ¡Cualquier ocasión es buena para celebrar con arte!
+                    </p>
+                    <a href="https://wa.me/50768001505?text=Hola%2C%20quiero%20reservar%20un%20evento" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="btn" 
+                       style="background: var(--white); color: #90C695; padding: 15px 35px; font-size: 1.1rem;">
+                        Reserva tu evento
+                    </a>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem;">
+                    <div class="placeholder-img" style="aspect-ratio: 4/3; border-radius: 10px; background: rgba(255,255,255,0.2);"></div>
+                    <div class="placeholder-img" style="aspect-ratio: 4/3; border-radius: 10px; background: rgba(255,255,255,0.2);"></div>
+                </div>
+            </div>
         </div>
+    </section>
+
+    <!-- Conoce al Team -->
+    <section id="team" style="background: var(--white); position: relative; overflow: hidden;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1;">
+            <h2 class="section-title" style="color: var(--primary-color); text-align: center; margin-bottom: 3rem;">Conoce al Team</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 4rem;">
+                <div style="text-align: center;">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 50%; margin: 0 auto 1.5rem; max-width: 250px; border: 5px solid var(--accent-color); box-shadow: 0 5px 20px rgba(0,0,0,0.1);"></div>
+                    <h3 style="color: var(--primary-color); font-size: 1.3rem; margin-bottom: 0.5rem;">Miriam</h3>
+                    <p style="color: var(--text-light); font-style: italic;">Fundadora</p>
+                </div>
+                <div style="text-align: center;">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 50%; margin: 0 auto 1.5rem; max-width: 250px; border: 5px solid var(--accent-color); box-shadow: 0 5px 20px rgba(0,0,0,0.1);"></div>
+                    <h3 style="color: var(--primary-color); font-size: 1.3rem; margin-bottom: 0.5rem;">Ruthy</h3>
+                    <p style="color: var(--text-light); font-style: italic;">Fundadora</p>
+                </div>
+            </div>
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-dark); margin-bottom: 1.5rem;">
+                    Nuestro equipo está formado por profesionales dedicados al arte, la educación y la creatividad.
+                </p>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-dark); margin-bottom: 1.5rem;">
+                    Cada miembro de nuestro equipo es experto en diversas técnicas y comparte la pasión por guiar a los estudiantes en su viaje artístico.
+                </p>
+                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-dark); font-weight: 600;">
+                    Juntos, nos aseguramos de que cada clase sea de calidad, inspiradora y académicamente actualizada.
+                </p>
+            </div>
+        </div>
+        <!-- Watercolor background effect -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(255,182,193,0.1) 0%, rgba(221,160,221,0.1) 25%, rgba(173,216,230,0.1) 50%, rgba(255,255,224,0.1) 75%, rgba(144,238,144,0.1) 100%); z-index: 0; pointer-events: none;"></div>
     </section>
 
     <!-- Registration -->
     <section id="inscripciones">
         <h2 class="section-title">Inscripciones</h2>
-        <div class="google-form-container">
-            <!-- 
-                INSTRUCCIONES PARA AGREGAR TU GOOGLE FORM:
-                1. Crea tu formulario en Google Forms (forms.google.com)
-                2. Haz clic en "Enviar" (botón superior derecho)
-                3. Selecciona el ícono de "<>" (Insertar)
-                4. Copia el código HTML que aparece
-                5. Reemplaza el iframe de abajo con tu código
-                
-                Ejemplo de código que obtendrás:
-                <iframe src="https://docs.google.com/forms/d/e/.../viewform?embedded=true" 
-                        width="640" height="800" frameborder="0" marginheight="0" marginwidth="0">
-                    Cargando…
-                </iframe>
-            -->
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScnpYcVioNZnP2BxA17yaHZYBLaaQZwcewgvY_6il0J7N1Skg/viewform?embedded=true" 
-                    width="100%" 
-                    height="2980" 
-                    frameborder="0" 
-                    marginheight="0" 
-                    marginwidth="0"
-                    class="google-form-iframe">
-                Loading…
-            </iframe>
+        <div class="whatsapp-button-container">
+            <a href="https://wa.me/50768001505?text=Hola%2C%20quiero%20agendar%20una%20clase%20de%20prueba" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="whatsapp-btn">
+                Agenda tu clase de prueba
+            </a>
+            <p style="margin-top: 1.5rem; color: var(--text-light); font-size: 1rem;">
+                📱 +507 6800-1505
+            </p>
         </div>
     </section>
 
@@ -685,29 +770,11 @@
         <div class="faq-container">
             <div class="faq-item">
                 <div class="faq-question">
-                    <span>¿Qué incluye la matrícula?</span>
-                    <span class="faq-icon">▼</span>
-                </div>
-                <div class="faq-answer">
-                    La matrícula tiene un costo de B/.100.00 (B/.80.00 si pagas antes del 31 de diciembre 2025). El pago de la matrícula no es reembolsable. Si las clases comienzan después de agosto, el costo de la matrícula será de B/.50.00.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
                     <span>¿Qué materiales están incluidos?</span>
                     <span class="faq-icon">▼</span>
                 </div>
                 <div class="faq-answer">
                     La libreta y materiales para pintar están incluidos en las clases de todos los niños desde los 4 años hasta los 15 años. No incluye canvas, ni maderas o telas. Estos pueden adquirirlos en Inspirarte o traerlos del lugar que gusten.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>¿Cómo y cuándo debo pagar?</span>
-                    <span class="faq-icon">▼</span>
-                </div>
-                <div class="faq-answer">
-                    Los pagos de la mensualidad deben realizarse dentro de los primeros 10 días del mes, en caso contrario tendrá un recargo del 10%. La transferencia debe tener el nombre y apellido del artista en la descripción. Envía el comprobante al WhatsApp: 68001505 o por email a: inspirartepty@gmail.com
                 </div>
             </div>
             <div class="faq-item">
@@ -737,41 +804,59 @@
                     Sí, los meses se pagan de forma regular de marzo a diciembre sin importar ausencias por viajes, enfermedad, etc. Las clases perdidas pueden recuperarse durante el año.
                 </div>
             </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>¿Cómo puedo realizar los pagos?</span>
-                    <span class="faq-icon">▼</span>
-                </div>
-                <div class="faq-answer">
-                    Puedes realizar pagos a: Banco General - Cuenta de ahorro 0477988702020 (Ruth Apelblat) o por Yappy al 66130020 (Miriam Friedheim). Recuerda incluir el nombre y apellido del artista en la descripción.
-                </div>
-            </div>
-            <div class="faq-item">
-                <div class="faq-question">
-                    <span>¿Hay descuentos disponibles?</span>
-                    <span class="faq-icon">▼</span>
-                </div>
-                <div class="faq-answer">
-                    Sí, ofrecemos un descuento del 10% para hermanos. También hay descuento en la matrícula si pagas antes del 31 de diciembre 2025 (B/.80.00 en lugar de B/.100.00).
-                </div>
-            </div>
         </div>
     </section>
 
-    <!-- About -->
-    <section id="about">
-        <h2 class="section-title">Sobre Nosotros</h2>
-        <div class="about-content">
-            <div class="about-text">
-                <p>Bienvenidos a Inspirarte, nuestro taller de arte para el año 2026.</p>
-                <p>En Inspirarte sus hijos trabajarán diferentes técnicas de dibujo, pintura con diferentes materiales y en diversos medios. Trabajarán motricidad fina y técnicas de arte terapia para desarrollar la creatividad, controlar la ansiedad y resolver problemas.</p>
-                <p>Nuestro enfoque está diseñado para niños desde los 3 años hasta los 15 años, adaptando las actividades según la edad y nivel de cada estudiante.</p>
-                <p>La libreta y materiales para pintar están incluidos en las clases de todos los niños desde los 4 años hasta los 15 años. Organizamos una muestra anual donde los alumnos pueden exponer y vender sus obras.</p>
+    <!-- About Us -->
+    <section id="about" style="background: var(--white); position: relative; overflow: hidden;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1;">
+            <h2 class="section-title" style="color: #8B6F47; text-align: left; margin-bottom: 2rem;">Nosotros</h2>
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: start; margin-bottom: 4rem;">
+                <div class="about-text" style="font-size: 1.1rem; line-height: 1.8; color: var(--text-dark);">
+                    <p style="margin-bottom: 1rem;">
+                        Inspirarte fue fundado en 2013 para conectar a la sociedad panameña con el poder del arte.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        Con más de 40 años de experiencia en el campo educativo y artístico, prometemos una enseñanza basada en la experiencia.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        Ofrecemos clases con diversas técnicas para todas las edades.
+                    </p>
+                    <p style="margin-bottom: 1rem; font-weight: 600;">
+                        ¡Bienvenido a nuestro taller, el lugar donde la creatividad no tiene límites!
+                    </p>
+                    <p style="margin-top: 1.5rem; font-weight: 600; color: var(--primary-color);">
+                        Miriam y Ruthy
+                    </p>
+                </div>
+                <div style="position: relative;">
+                    <div class="placeholder-img" style="aspect-ratio: 3/4; border-radius: 20px; border: 8px solid #FFD700; box-shadow: 0 10px 30px rgba(0,0,0,0.2);"></div>
+                </div>
             </div>
-            <div class="about-image placeholder-img" style="height: 400px;">
-                Imagen del Taller
+
+            <h2 class="section-title" style="color: #8B6F47; text-align: left; margin-bottom: 2rem; margin-top: 4rem;">Nuestro Equipo</h2>
+            <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: start;">
+                <div class="about-text" style="font-size: 1.1rem; line-height: 1.8; color: var(--text-dark);">
+                    <p style="margin-bottom: 1rem;">
+                        Nuestro equipo está formado por profesionales dedicados al arte, la educación y la creatividad.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        Cada miembro de nuestro equipo es experto en diversas técnicas y comparte la pasión por guiar a los estudiantes en su viaje artístico.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        Juntos, nos aseguramos de que cada clase sea de calidad, inspiradora y académicamente actualizada.
+                    </p>
+                    <p style="margin-top: 1rem; font-weight: 600;">
+                        Cada miembro de nuestro equipo es crucial para nuestra misión.
+                    </p>
+                </div>
+                <div style="position: relative;">
+                    <div class="placeholder-img" style="aspect-ratio: 4/3; border-radius: 20px; border: 8px solid #FFA500; box-shadow: 0 10px 30px rgba(0,0,0,0.2);"></div>
+                </div>
             </div>
         </div>
+        <!-- Watercolor background effect -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(255,182,193,0.1) 0%, rgba(221,160,221,0.1) 25%, rgba(173,216,230,0.1) 50%, rgba(255,255,224,0.1) 75%, rgba(144,238,144,0.1) 100%); z-index: 0; pointer-events: none;"></div>
     </section>
 
     <!-- Social Media -->
