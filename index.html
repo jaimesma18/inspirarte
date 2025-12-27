@@ -1087,17 +1087,21 @@
             function initCarousel(totalSlides) {
                 let currentSlide = 0;
                 const track = document.getElementById('carouselTrack');
-                const wrapper = track.parentElement;
+                if (!track) return;
+                
+                const wrapper = track.closest('.carousel-wrapper');
                 const slides = track.querySelectorAll('.carousel-slide');
                 const dots = document.querySelectorAll('.carousel-dot');
                 const prevButton = document.querySelector('.carousel-button.prev');
                 const nextButton = document.querySelector('.carousel-button.next');
 
                 function updateCarousel() {
+                    if (!track || !wrapper) return;
+                    
                     // Calcular el desplazamiento usando el ancho del wrapper
-                    if (wrapper && wrapper.offsetWidth > 0) {
-                        const slideWidth = wrapper.offsetWidth;
-                        const offset = currentSlide * slideWidth;
+                    const wrapperWidth = wrapper.offsetWidth || wrapper.clientWidth;
+                    if (wrapperWidth > 0) {
+                        const offset = currentSlide * wrapperWidth;
                         track.style.transform = `translateX(-${offset}px)`;
                     } else {
                         // Fallback a porcentajes si el wrapper no está listo
@@ -1116,15 +1120,61 @@
                     });
                 }
                 
-                // Actualizar cuando cambia el tamaño de la ventana
+                // Actualizar cuando cambia el tamaño de la ventana (solo una vez)
                 let resizeTimeout;
-                window.addEventListener('resize', () => {
+                const resizeHandler = () => {
                     clearTimeout(resizeTimeout);
-                    resizeTimeout = setTimeout(updateCarousel, 100);
-                });
+                    resizeTimeout = setTimeout(updateCarousel, 150);
+                };
+                window.addEventListener('resize', resizeHandler);
                 
-                // Inicializar posición después de un pequeño delay para asegurar que el DOM esté listo
-                setTimeout(updateCarousel, 100);
+                // Inicializar posición - esperar a que las imágenes se carguen
+                const initCarouselPosition = () => {
+                    // Esperar a que el wrapper tenga un ancho válido
+                    const checkReady = () => {
+                        const wrapperWidth = wrapper.offsetWidth || wrapper.clientWidth;
+                        if (wrapperWidth > 0) {
+                            updateCarousel();
+                        } else {
+                            setTimeout(checkReady, 50);
+                        }
+                    };
+                    checkReady();
+                };
+                
+                // Esperar a que las imágenes se carguen
+                if (slides.length > 0) {
+                    let imagesLoaded = 0;
+                    slides.forEach(slide => {
+                        const img = slide.querySelector('img');
+                        if (img) {
+                            if (img.complete) {
+                                imagesLoaded++;
+                            } else {
+                                img.addEventListener('load', () => {
+                                    imagesLoaded++;
+                                    if (imagesLoaded === slides.length) {
+                                        initCarouselPosition();
+                                    }
+                                });
+                                img.addEventListener('error', () => {
+                                    imagesLoaded++;
+                                    if (imagesLoaded === slides.length) {
+                                        initCarouselPosition();
+                                    }
+                                });
+                            }
+                        } else {
+                            imagesLoaded++;
+                        }
+                    });
+                    
+                    if (imagesLoaded === slides.length) {
+                        initCarouselPosition();
+                    }
+                } else {
+                    initCarouselPosition();
+                }
 
                 function nextSlide() {
                     currentSlide = (currentSlide + 1) % totalSlides;
