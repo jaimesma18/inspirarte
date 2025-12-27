@@ -252,16 +252,13 @@
         }
 
         .carousel-slide {
+            min-width: 100%;
             width: 100%;
             flex-shrink: 0;
             position: relative;
-            opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
-        }
-
-        .carousel-slide.active {
-            opacity: 1;
-            transform: scale(1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .carousel-slide img {
@@ -1090,16 +1087,23 @@
             function initCarousel(totalSlides) {
                 let currentSlide = 0;
                 const track = document.getElementById('carouselTrack');
+                const wrapper = track.parentElement;
                 const slides = track.querySelectorAll('.carousel-slide');
                 const dots = document.querySelectorAll('.carousel-dot');
                 const prevButton = document.querySelector('.carousel-button.prev');
                 const nextButton = document.querySelector('.carousel-button.next');
 
                 function updateCarousel() {
-                    // Calcular el desplazamiento (100% del ancho para mostrar solo una imagen)
-                    const slideWidth = 100; // porcentaje
-                    const offset = currentSlide * slideWidth;
-                    track.style.transform = `translateX(-${offset}%)`;
+                    // Calcular el desplazamiento usando el ancho del wrapper
+                    if (wrapper && wrapper.offsetWidth > 0) {
+                        const slideWidth = wrapper.offsetWidth;
+                        const offset = currentSlide * slideWidth;
+                        track.style.transform = `translateX(-${offset}px)`;
+                    } else {
+                        // Fallback a porcentajes si el wrapper no está listo
+                        const offset = currentSlide * 100;
+                        track.style.transform = `translateX(-${offset}%)`;
+                    }
                     
                     // Actualizar clases active en slides
                     slides.forEach((slide, index) => {
@@ -1111,6 +1115,16 @@
                         dot.classList.toggle('active', index === currentSlide);
                     });
                 }
+                
+                // Actualizar cuando cambia el tamaño de la ventana
+                let resizeTimeout;
+                window.addEventListener('resize', () => {
+                    clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(updateCarousel, 100);
+                });
+                
+                // Inicializar posición después de un pequeño delay para asegurar que el DOM esté listo
+                setTimeout(updateCarousel, 100);
 
                 function nextSlide() {
                     currentSlide = (currentSlide + 1) % totalSlides;
