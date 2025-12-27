@@ -941,7 +941,7 @@
             
             // Patrones de nombres comunes a intentar (empezar con artshow- que es el más común)
             const namePatterns = [
-                (i) => `artshow-${i}`,
+                (i) => `artshow-${i}`,  // Patrón principal - probar primero
                 (i) => `image-${i}`,
                 (i) => `img-${i}`,
                 (i) => `foto-${i}`,
@@ -953,7 +953,7 @@
                 (i) => `P${String(i).padStart(4, '0')}`
             ];
             
-            // Función para cargar imágenes dinámicamente
+            // Función para cargar imágenes dinámicamente (optimizada para velocidad)
             function loadCarouselImages() {
                 const track = document.getElementById('carouselTrack');
                 const dotsContainer = document.getElementById('carouselDots');
@@ -967,22 +967,57 @@
                 const validImages = [];
                 let currentIndex = 1;
                 let consecutiveFailures = 0;
-                const maxConsecutiveFailures = 10; // Detener después de 10 fallos consecutivos (más tolerante)
+                const maxConsecutiveFailures = 3; // Detener después de 3 fallos consecutivos
                 let checking = true;
+                const maxImages = 30; // Límite máximo de imágenes
 
                 function tryLoadNextImage() {
-                    if (!checking) {
+                    if (!checking || currentIndex > maxImages) {
                         renderCarousel(validImages);
                         return;
                     }
 
-                    let foundInThisRound = false;
-                    let patternIndex = 0;
-                    let extIndex = 0;
-
-                    function tryNext() {
-                        if (patternIndex >= namePatterns.length) {
-                            // No se encontró ninguna imagen con ningún patrón para este índice
+                    // Priorizar el patrón más común: artshow-X.jpg
+                    const imageName = `artshow-${currentIndex}.jpg`;
+                    const fullPath = `images/artshow/${imageName}`;
+                    const img = new Image();
+                    
+                    img.onload = function() {
+                        validImages.push({
+                            src: this.src,
+                            alt: `Inspirarte Artshow 2025 - Imagen ${validImages.length + 1}`
+                        });
+                        consecutiveFailures = 0;
+                        currentIndex++;
+                        // Cargar siguiente imagen inmediatamente (sin delay)
+                        tryLoadNextImage();
+                    };
+                    
+                    img.onerror = function() {
+                        // Si falla jpg, probar jpeg
+                        if (consecutiveFailures === 0) {
+                            const img2 = new Image();
+                            img2.onload = function() {
+                                validImages.push({
+                                    src: this.src,
+                                    alt: `Inspirarte Artshow 2025 - Imagen ${validImages.length + 1}`
+                                });
+                                consecutiveFailures = 0;
+                                currentIndex++;
+                                tryLoadNextImage();
+                            };
+                            img2.onerror = function() {
+                                consecutiveFailures++;
+                                if (consecutiveFailures >= maxConsecutiveFailures) {
+                                    checking = false;
+                                    renderCarousel(validImages);
+                                    return;
+                                }
+                                currentIndex++;
+                                tryLoadNextImage();
+                            };
+                            img2.src = `images/artshow/artshow-${currentIndex}.jpeg`;
+                        } else {
                             consecutiveFailures++;
                             if (consecutiveFailures >= maxConsecutiveFailures) {
                                 checking = false;
@@ -990,46 +1025,11 @@
                                 return;
                             }
                             currentIndex++;
-                            setTimeout(tryLoadNextImage, 200);
-                            return;
+                            tryLoadNextImage();
                         }
-
-                        if (extIndex >= imageExtensions.length) {
-                            patternIndex++;
-                            extIndex = 0;
-                            tryNext();
-                            return;
-                        }
-
-                        const pattern = namePatterns[patternIndex];
-                        const ext = imageExtensions[extIndex];
-                        const imageName = `${pattern(currentIndex)}.${ext}`;
-                        const fullPath = `images/artshow/${imageName}`;
-                        const img = new Image();
-                        img.src = fullPath;
-                        
-                        img.onload = function() {
-                            validImages.push({
-                                src: this.src,
-                                alt: `Inspirarte Artshow 2025 - Imagen ${validImages.length + 1}`
-                            });
-                            consecutiveFailures = 0;
-                            foundInThisRound = true;
-                            currentIndex++;
-                            setTimeout(tryLoadNextImage, 200);
-                        };
-                        
-                        img.onerror = function() {
-                            extIndex++;
-                            if (extIndex >= imageExtensions.length) {
-                                patternIndex++;
-                                extIndex = 0;
-                            }
-                            tryNext();
-                        };
-                    }
-
-                    tryNext();
+                    };
+                    
+                    img.src = fullPath;
                 }
 
                 // Iniciar la carga
