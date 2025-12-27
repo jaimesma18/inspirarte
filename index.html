@@ -247,11 +247,21 @@
         .carousel-track {
             display: flex;
             transition: transform 0.5s ease-in-out;
+            gap: 1rem;
+            padding: 0 10%;
         }
 
         .carousel-slide {
-            min-width: 100%;
+            min-width: 80%;
+            flex-shrink: 0;
             position: relative;
+            opacity: 0.6;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+            transform: scale(1.05);
         }
 
         .carousel-slide img {
@@ -261,6 +271,7 @@
             object-fit: contain;
             display: block;
             background: var(--white);
+            border-radius: 10px;
         }
 
         .carousel-button {
@@ -957,7 +968,7 @@
             // Extensiones de imagen soportadas
             const imageExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
             
-            // Patrones de nombres comunes a intentar
+            // Patrones de nombres comunes a intentar (empezar con artshow- que es el más común)
             const namePatterns = [
                 (i) => `artshow-${i}`,
                 (i) => `image-${i}`,
@@ -981,22 +992,24 @@
                 // Limpiar contenido previo
                 track.innerHTML = '';
                 dotsContainer.innerHTML = '';
+                
                 const validImages = [];
                 let currentIndex = 1;
                 let consecutiveFailures = 0;
-                const maxConsecutiveFailures = namePatterns.length * imageExtensions.length;
+                const maxConsecutiveFailures = 10; // Detener después de 10 fallos consecutivos (más tolerante)
                 let checking = true;
-                let currentPatternIndex = 0;
 
                 function tryLoadNextImage() {
-                    if (!checking) return;
+                    if (!checking) {
+                        renderCarousel(validImages);
+                        return;
+                    }
 
-                    let imageFound = false;
-                    let attemptsForThisIndex = 0;
-                    let extIndex = 0;
+                    let foundInThisRound = false;
                     let patternIndex = 0;
+                    let extIndex = 0;
 
-                    function tryPatternAndExtension() {
+                    function tryNext() {
                         if (patternIndex >= namePatterns.length) {
                             // No se encontró ninguna imagen con ningún patrón para este índice
                             consecutiveFailures++;
@@ -1006,24 +1019,23 @@
                                 return;
                             }
                             currentIndex++;
-                            currentPatternIndex = 0;
-                            setTimeout(tryLoadNextImage, 50);
+                            setTimeout(tryLoadNextImage, 200);
                             return;
                         }
 
                         if (extIndex >= imageExtensions.length) {
-                            // Intentar siguiente patrón
                             patternIndex++;
                             extIndex = 0;
-                            tryPatternAndExtension();
+                            tryNext();
                             return;
                         }
 
                         const pattern = namePatterns[patternIndex];
                         const ext = imageExtensions[extIndex];
                         const imageName = `${pattern(currentIndex)}.${ext}`;
+                        const fullPath = `images/artshow/${imageName}`;
                         const img = new Image();
-                        img.src = `images/artshow/${imageName}`;
+                        img.src = fullPath;
                         
                         img.onload = function() {
                             validImages.push({
@@ -1031,20 +1043,22 @@
                                 alt: `Inspirarte Artshow 2025 - Imagen ${validImages.length + 1}`
                             });
                             consecutiveFailures = 0;
-                            imageFound = true;
+                            foundInThisRound = true;
                             currentIndex++;
-                            currentPatternIndex = 0;
-                            setTimeout(tryLoadNextImage, 50);
+                            setTimeout(tryLoadNextImage, 200);
                         };
                         
                         img.onerror = function() {
-                            attemptsForThisIndex++;
                             extIndex++;
-                            tryPatternAndExtension();
+                            if (extIndex >= imageExtensions.length) {
+                                patternIndex++;
+                                extIndex = 0;
+                            }
+                            tryNext();
                         };
                     }
 
-                    tryPatternAndExtension();
+                    tryNext();
                 }
 
                 // Iniciar la carga
@@ -1111,12 +1125,21 @@
             function initCarousel(totalSlides) {
                 let currentSlide = 0;
                 const track = document.getElementById('carouselTrack');
+                const slides = track.querySelectorAll('.carousel-slide');
                 const dots = document.querySelectorAll('.carousel-dot');
                 const prevButton = document.querySelector('.carousel-button.prev');
                 const nextButton = document.querySelector('.carousel-button.next');
 
                 function updateCarousel() {
-                    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+                    // Calcular el desplazamiento (80% del ancho + gap)
+                    const slideWidth = 80; // porcentaje
+                    const offset = currentSlide * slideWidth;
+                    track.style.transform = `translateX(calc(-${offset}% - ${currentSlide * 1}rem))`;
+                    
+                    // Actualizar clases active en slides
+                    slides.forEach((slide, index) => {
+                        slide.classList.toggle('active', index === currentSlide);
+                    });
                     
                     // Actualizar dots
                     dots.forEach((dot, index) => {
@@ -1157,9 +1180,11 @@
 
             // Cargar carrusel cuando el DOM esté listo
             if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', loadCarouselImages);
+                document.addEventListener('DOMContentLoaded', function() {
+                    setTimeout(loadCarouselImages, 100);
+                });
             } else {
-                loadCarouselImages();
+                setTimeout(loadCarouselImages, 100);
             }
         })();
     </script>
