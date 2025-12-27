@@ -228,58 +228,99 @@
             margin-right: 8px;
         }
 
-        /* Gallery */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .gallery-item {
+        /* Carousel */
+        .carousel-container {
             position: relative;
+            max-width: 1200px;
+            margin: 3rem auto 0;
             overflow: hidden;
             border-radius: 15px;
-            aspect-ratio: 1;
-            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
         }
 
-        .gallery-item img {
+        .carousel-wrapper {
+            position: relative;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s;
+            overflow: hidden;
         }
 
-        .gallery-item img:not([src]),
-        .gallery-item img[src=""],
-        .gallery-item:not(:has(img[src])) {
-            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%);
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: auto;
+            max-height: 600px;
+            object-fit: contain;
+            display: block;
+            background: var(--white);
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.5rem;
             color: var(--primary-color);
-            font-weight: bold;
+            z-index: 10;
+            transition: all 0.3s;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.1);
+        .carousel-button:hover {
+            background: var(--white);
+            transform: translateY(-50%) scale(1.1);
         }
 
-        .gallery-item::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(107, 78, 113, 0.3);
-            opacity: 0;
-            transition: opacity 0.3s;
+        .carousel-button.prev {
+            left: 20px;
         }
 
-        .gallery-item:hover::after {
-            opacity: 1;
+        .carousel-button.next {
+            right: 20px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 1.5rem;
+            padding: 0 1rem;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-light);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .carousel-dot.active {
+            background: var(--primary-color);
+            transform: scale(1.3);
+        }
+
+        .carousel-dot:hover {
+            background: var(--secondary-color);
         }
 
         /* FAQ */
@@ -561,7 +602,7 @@
                         <li style="margin-bottom: 1rem; font-size: 1.05rem; line-height: 1.6; color: var(--text-dark);">
                             • Recibes la atención individualizada de nuestros profesores para desarrollar tu técnica y estilo único.
                         </li>
-                    </ul>
+            </ul>
                     <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-dark); margin-bottom: 2rem; font-weight: 600;">
                         ¡Empieza tu viaje artístico cuando quieras, como quieras!
                     </p>
@@ -572,15 +613,15 @@
                        style="background: #90C695; color: var(--white); padding: 15px 35px; font-size: 1.1rem;">
                         Reserva tu clase
                     </a>
-                </div>
+        </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
                     <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px;"></div>
                     <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px;"></div>
                     <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px;"></div>
                     <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px;"></div>
-                </div>
             </div>
-        </div>
+            </div>
+            </div>
     </section>
 
     <!-- Techniques -->
@@ -595,27 +636,33 @@
             </p>
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-bottom: 2rem;">
                 <div style="text-align: center;">
-                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem;"></div>
+                    <img src="images/tecnica-acrilica.jpg" alt="Pintura acrílica" style="width: 100%; aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem; display: none;"></div>
                     <h3 style="color: var(--primary-color); font-size: 1.2rem;">Pintura acrílica</h3>
-                </div>
+            </div>
                 <div style="text-align: center;">
-                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem;"></div>
+                    <img src="images/tecnica-oleo.jpg" alt="Óleo" style="width: 100%; aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem; display: none;"></div>
                     <h3 style="color: var(--primary-color); font-size: 1.2rem;">Óleo</h3>
-                </div>
+            </div>
                 <div style="text-align: center;">
-                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem;"></div>
+                    <img src="images/tecnica-escultura.jpg" alt="Escultura" style="width: 100%; aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem; display: none;"></div>
                     <h3 style="color: var(--primary-color); font-size: 1.2rem;">Escultura</h3>
-                </div>
+            </div>
                 <div style="text-align: center;">
-                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem;"></div>
+                    <img src="images/tecnica-ceramica.jpg" alt="Cerámica" style="width: 100%; aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem; display: none;"></div>
                     <h3 style="color: var(--primary-color); font-size: 1.2rem;">Cerámica</h3>
-                </div>
+        </div>
                 <div style="text-align: center;">
-                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem;"></div>
+                    <img src="images/tecnica-resina.jpg" alt="Resina" style="width: 100%; aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem; display: none;"></div>
                     <h3 style="color: var(--primary-color); font-size: 1.2rem;">Resina</h3>
-                </div>
+        </div>
                 <div style="text-align: center;">
-                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem;"></div>
+                    <img src="images/tecnica-acuarela.jpg" alt="Acuarela" style="width: 100%; aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem; object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 10px; margin-bottom: 1rem; display: none;"></div>
                     <h3 style="color: var(--primary-color); font-size: 1.2rem;">Acuarela</h3>
                 </div>
             </div>
@@ -642,7 +689,7 @@
                         <li style="margin-bottom: 0.8rem; font-size: 1.1rem;">• "Arte con causa" para fundaciones</li>
                         <li style="margin-bottom: 0.8rem; font-size: 1.1rem;">• Eventos Neón</li>
                         <li style="margin-bottom: 0.8rem; font-size: 1.1rem;">• Murales</li>
-                    </ul>
+            </ul>
                     <p style="font-size: 1.1rem; margin-bottom: 2rem; font-style: italic;">
                         ¡Cualquier ocasión es buena para celebrar con arte!
                     </p>
@@ -668,12 +715,14 @@
             <h2 class="section-title" style="color: var(--primary-color); text-align: center; margin-bottom: 3rem;">Conoce al Team</h2>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 4rem;">
                 <div style="text-align: center;">
-                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 50%; margin: 0 auto 1.5rem; max-width: 250px; border: 5px solid var(--accent-color); box-shadow: 0 5px 20px rgba(0,0,0,0.1);"></div>
+                    <img src="images/miriam.jpg" alt="Miriam" style="width: 100%; max-width: 250px; aspect-ratio: 1; border-radius: 50%; margin: 0 auto 1.5rem; border: 5px solid var(--accent-color); box-shadow: 0 5px 20px rgba(0,0,0,0.1); object-fit: cover; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 50%; margin: 0 auto 1.5rem; max-width: 250px; border: 5px solid var(--accent-color); box-shadow: 0 5px 20px rgba(0,0,0,0.1); display: none;"></div>
                     <h3 style="color: var(--primary-color); font-size: 1.3rem; margin-bottom: 0.5rem;">Miriam</h3>
                     <p style="color: var(--text-light); font-style: italic;">Fundadora</p>
                 </div>
                 <div style="text-align: center;">
-                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 50%; margin: 0 auto 1.5rem; max-width: 250px; border: 5px solid var(--accent-color); box-shadow: 0 5px 20px rgba(0,0,0,0.1);"></div>
+                    <img src="images/ruthy.jpg" alt="Ruthy" style="width: 100%; max-width: 250px; aspect-ratio: 1; border-radius: 50%; margin: 0 auto 1.5rem; border: 5px solid var(--accent-color); box-shadow: 0 5px 20px rgba(0,0,0,0.1); object-fit: cover; display: block;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="placeholder-img" style="aspect-ratio: 1; border-radius: 50%; margin: 0 auto 1.5rem; max-width: 250px; border: 5px solid var(--accent-color); box-shadow: 0 5px 20px rgba(0,0,0,0.1); display: none;"></div>
                     <h3 style="color: var(--primary-color); font-size: 1.3rem; margin-bottom: 0.5rem;">Ruthy</h3>
                     <p style="color: var(--text-light); font-style: italic;">Fundadora</p>
                 </div>
@@ -718,37 +767,17 @@
 
     <!-- Gallery -->
     <section id="galeria">
-        <h2 class="section-title">Galería de Proyectos</h2>
-        <div class="gallery-grid">
-            <!-- 
-                INSTRUCCIONES PARA AGREGAR FOTOS:
-                1. Coloca tus imágenes en la carpeta "images/"
-                2. Reemplaza "proyecto1.jpg" con el nombre de tu imagen
-                3. Para agregar más fotos, copia y pega uno de estos bloques <div class="gallery-item">...</div>
-            -->
-            <div class="gallery-item">
-                <img src="images/proyecto1.jpg" alt="Proyecto 1">
+        <h2 class="section-title">Inspirarte Artshow 2025</h2>
+        <div class="carousel-container">
+            <div class="carousel-wrapper">
+                <button class="carousel-button prev" aria-label="Imagen anterior">‹</button>
+                <div class="carousel-track" id="carouselTrack">
+                    <!-- Las imágenes se cargarán dinámicamente con JavaScript -->
             </div>
-            <div class="gallery-item">
-                <img src="images/proyecto2.jpg" alt="Proyecto 2">
+                <button class="carousel-button next" aria-label="Siguiente imagen">›</button>
             </div>
-            <div class="gallery-item">
-                <img src="images/proyecto3.jpg" alt="Proyecto 3">
-            </div>
-            <div class="gallery-item">
-                <img src="images/proyecto4.jpg" alt="Proyecto 4">
-            </div>
-            <div class="gallery-item">
-                <img src="images/proyecto5.jpg" alt="Proyecto 5">
-            </div>
-            <div class="gallery-item">
-                <img src="images/proyecto6.jpg" alt="Proyecto 6">
-            </div>
-            <div class="gallery-item">
-                <img src="images/proyecto7.jpg" alt="Proyecto 7">
-            </div>
-            <div class="gallery-item">
-                <img src="images/proyecto8.jpg" alt="Proyecto 8">
+            <div class="carousel-dots" id="carouselDots">
+                <!-- Los puntos se generarán dinámicamente con JavaScript -->
             </div>
         </div>
     </section>
@@ -793,7 +822,7 @@
                     Sí, los meses se pagan de forma regular de marzo a diciembre sin importar ausencias por viajes, enfermedad, etc. Las clases perdidas pueden recuperarse durante el año.
                 </div>
             </div>
-        </div>
+                </div>
     </section>
 
     <!-- About Us -->
@@ -814,14 +843,12 @@
                     <p style="margin-bottom: 1rem; font-weight: 600;">
                         ¡Bienvenido a nuestro taller, el lugar donde la creatividad no tiene límites!
                     </p>
-                    <p style="margin-top: 1.5rem; font-weight: 600; color: var(--primary-color);">
-                        Miriam y Ruthy
-                    </p>
                 </div>
                 <div style="position: relative;">
-                    <div class="placeholder-img" style="aspect-ratio: 3/4; border-radius: 20px; border: 8px solid #FFD700; box-shadow: 0 10px 30px rgba(0,0,0,0.2);"></div>
-                </div>
+                    <img src="images/miriam-ruthy.jpg" alt="Miriam y Ruthy" style="width: 100%; aspect-ratio: 3/4; border-radius: 20px; border: 8px solid #FFD700; box-shadow: 0 10px 30px rgba(0,0,0,0.2); object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="placeholder-img" style="aspect-ratio: 3/4; border-radius: 20px; border: 8px solid #FFD700; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: none;"></div>
             </div>
+                </div>
 
             <h2 class="section-title" style="color: #8B6F47; text-align: left; margin-bottom: 2rem; margin-top: 4rem;">Nuestro Equipo</h2>
             <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: start;">
@@ -838,11 +865,12 @@
                     <p style="margin-top: 1rem; font-weight: 600;">
                         Cada miembro de nuestro equipo es crucial para nuestra misión.
                     </p>
-                </div>
-                <div style="position: relative;">
-                    <div class="placeholder-img" style="aspect-ratio: 4/3; border-radius: 20px; border: 8px solid #FFA500; box-shadow: 0 10px 30px rgba(0,0,0,0.2);"></div>
-                </div>
             </div>
+                <div style="position: relative;">
+                    <img src="images/equipo.jpg" alt="Nuestro Equipo" style="width: 100%; aspect-ratio: 4/3; border-radius: 20px; border: 8px solid #FFA500; box-shadow: 0 10px 30px rgba(0,0,0,0.2); object-fit: cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                    <div class="placeholder-img" style="aspect-ratio: 4/3; border-radius: 20px; border: 8px solid #FFA500; box-shadow: 0 10px 30px rgba(0,0,0,0.2); display: none;"></div>
+            </div>
+        </div>
         </div>
         <!-- Watercolor background effect -->
         <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(255,182,193,0.1) 0%, rgba(221,160,221,0.1) 25%, rgba(173,216,230,0.1) 50%, rgba(255,255,224,0.1) 75%, rgba(144,238,144,0.1) 100%); z-index: 0; pointer-events: none;"></div>
@@ -853,8 +881,16 @@
         <h2 class="section-title" style="color: var(--white);">Síguenos en Redes Sociales</h2>
         <p style="font-size: 1.2rem; margin-bottom: 1rem;">Mantente al día con nuestros eventos, proyectos y noticias</p>
         <div class="social-links">
-            <a href="https://www.facebook.com/InspirArtePTY/?locale=es_LA" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">📘</a>
-            <a href="https://www.instagram.com/inspirartepty/?hl=es" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">📷</a>
+            <a href="https://www.facebook.com/InspirArtePTY/?locale=es_LA" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+            </a>
+            <a href="https://www.instagram.com/inspirartepty/?hl=es" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+            </a>
         </div>
         <div style="margin-top: 3rem;">
             <p style="font-size: 1.1rem; margin-bottom: 1rem;">📧 Email: <a href="mailto:inspirartepty@gmail.com" style="color: var(--accent-color);">inspirartepty@gmail.com</a></p>
@@ -916,20 +952,216 @@
         });
 
 
-        // Handle missing images in gallery
-        document.querySelectorAll('.gallery-item img').forEach(img => {
-            img.addEventListener('error', function() {
-                this.style.display = 'none';
-                const galleryItem = this.parentElement;
-                if (!galleryItem.querySelector('.placeholder-text')) {
-                    const placeholder = document.createElement('div');
-                    placeholder.className = 'placeholder-text';
-                    placeholder.style.cssText = 'width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--secondary-color) 0%, var(--accent-color) 100%); color: var(--primary-color); font-weight: bold; font-size: 1.2rem;';
-                    placeholder.textContent = this.alt || 'Imagen no disponible';
-                    galleryItem.appendChild(placeholder);
+        // Carousel functionality
+        (function() {
+            // Extensiones de imagen soportadas
+            const imageExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+            
+            // Patrones de nombres comunes a intentar
+            const namePatterns = [
+                (i) => `artshow-${i}`,
+                (i) => `image-${i}`,
+                (i) => `img-${i}`,
+                (i) => `foto-${i}`,
+                (i) => `photo-${i}`,
+                (i) => `imagen-${i}`,
+                (i) => `${i}`,
+                (i) => `IMG_${String(i).padStart(4, '0')}`,
+                (i) => `DSC_${String(i).padStart(4, '0')}`,
+                (i) => `P${String(i).padStart(4, '0')}`
+            ];
+            
+            // Función para cargar imágenes dinámicamente
+            function loadCarouselImages() {
+                const track = document.getElementById('carouselTrack');
+                const dotsContainer = document.getElementById('carouselDots');
+                
+                if (!track || !dotsContainer) return;
+
+                // Limpiar contenido previo
+                track.innerHTML = '';
+                dotsContainer.innerHTML = '';
+                const validImages = [];
+                let currentIndex = 1;
+                let consecutiveFailures = 0;
+                const maxConsecutiveFailures = namePatterns.length * imageExtensions.length;
+                let checking = true;
+                let currentPatternIndex = 0;
+
+                function tryLoadNextImage() {
+                    if (!checking) return;
+
+                    let imageFound = false;
+                    let attemptsForThisIndex = 0;
+                    let extIndex = 0;
+                    let patternIndex = 0;
+
+                    function tryPatternAndExtension() {
+                        if (patternIndex >= namePatterns.length) {
+                            // No se encontró ninguna imagen con ningún patrón para este índice
+                            consecutiveFailures++;
+                            if (consecutiveFailures >= maxConsecutiveFailures) {
+                                checking = false;
+                                renderCarousel(validImages);
+                                return;
+                            }
+                            currentIndex++;
+                            currentPatternIndex = 0;
+                            setTimeout(tryLoadNextImage, 50);
+                            return;
+                        }
+
+                        if (extIndex >= imageExtensions.length) {
+                            // Intentar siguiente patrón
+                            patternIndex++;
+                            extIndex = 0;
+                            tryPatternAndExtension();
+                            return;
+                        }
+
+                        const pattern = namePatterns[patternIndex];
+                        const ext = imageExtensions[extIndex];
+                        const imageName = `${pattern(currentIndex)}.${ext}`;
+                        const img = new Image();
+                        img.src = `images/artshow/${imageName}`;
+                        
+                        img.onload = function() {
+                            validImages.push({
+                                src: this.src,
+                                alt: `Inspirarte Artshow 2025 - Imagen ${validImages.length + 1}`
+                            });
+                            consecutiveFailures = 0;
+                            imageFound = true;
+                            currentIndex++;
+                            currentPatternIndex = 0;
+                            setTimeout(tryLoadNextImage, 50);
+                        };
+                        
+                        img.onerror = function() {
+                            attemptsForThisIndex++;
+                            extIndex++;
+                            tryPatternAndExtension();
+                        };
+                    }
+
+                    tryPatternAndExtension();
                 }
-            });
-        });
+
+                // Iniciar la carga
+                tryLoadNextImage();
+            }
+
+            function renderCarousel(images) {
+                const track = document.getElementById('carouselTrack');
+                const dotsContainer = document.getElementById('carouselDots');
+                const prevButton = document.querySelector('.carousel-button.prev');
+                const nextButton = document.querySelector('.carousel-button.next');
+                
+                if (!track || !dotsContainer || images.length === 0) {
+                    track.innerHTML = '<div style="padding: 3rem; text-align: center; color: var(--text-light);">No hay imágenes disponibles</div>';
+                    // Desactivar botones
+                    if (prevButton) {
+                        prevButton.style.display = 'none';
+                        prevButton.disabled = true;
+                    }
+                    if (nextButton) {
+                        nextButton.style.display = 'none';
+                        nextButton.disabled = true;
+                    }
+                    if (dotsContainer) {
+                        dotsContainer.style.display = 'none';
+                    }
+                    return;
+                }
+                
+                // Activar botones si hay imágenes
+                if (prevButton) {
+                    prevButton.style.display = 'flex';
+                    prevButton.disabled = false;
+                }
+                if (nextButton) {
+                    nextButton.style.display = 'flex';
+                    nextButton.disabled = false;
+                }
+                if (dotsContainer) {
+                    dotsContainer.style.display = 'flex';
+                }
+
+                // Crear slides
+                images.forEach((image, index) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'carousel-slide';
+                    slide.innerHTML = `<img src="${image.src}" alt="${image.alt}">`;
+                    track.appendChild(slide);
+                });
+
+                // Crear dots
+                images.forEach((_, index) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'carousel-dot' + (index === 0 ? ' active' : '');
+                    dot.setAttribute('data-slide', index);
+                    dot.setAttribute('aria-label', `Ir a imagen ${index + 1}`);
+                    dotsContainer.appendChild(dot);
+                });
+
+                // Inicializar carrusel
+                initCarousel(images.length);
+            }
+
+            function initCarousel(totalSlides) {
+                let currentSlide = 0;
+                const track = document.getElementById('carouselTrack');
+                const dots = document.querySelectorAll('.carousel-dot');
+                const prevButton = document.querySelector('.carousel-button.prev');
+                const nextButton = document.querySelector('.carousel-button.next');
+
+                function updateCarousel() {
+                    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+                    
+                    // Actualizar dots
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === currentSlide);
+                    });
+                }
+
+                function nextSlide() {
+                    currentSlide = (currentSlide + 1) % totalSlides;
+                    updateCarousel();
+                }
+
+                function prevSlide() {
+                    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                    updateCarousel();
+                }
+
+                // Event listeners
+                if (nextButton) nextButton.addEventListener('click', nextSlide);
+                if (prevButton) prevButton.addEventListener('click', prevSlide);
+
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        currentSlide = index;
+                        updateCarousel();
+                    });
+                });
+
+                // Auto-play opcional (descomenta si quieres que avance automáticamente)
+                // setInterval(nextSlide, 5000);
+
+                // Navegación con teclado
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') prevSlide();
+                    if (e.key === 'ArrowRight') nextSlide();
+                });
+            }
+
+            // Cargar carrusel cuando el DOM esté listo
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadCarouselImages);
+            } else {
+                loadCarouselImages();
+            }
+        })();
     </script>
     <script type="text/javascript">
         (function(w, d, s, i) {
