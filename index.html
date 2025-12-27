@@ -1130,39 +1130,70 @@
                 
                 // Inicializar posición - esperar a que las imágenes se carguen
                 const initCarouselPosition = () => {
-                    // Esperar a que el wrapper tenga un ancho válido
+                    // Esperar a que el wrapper tenga un ancho válido con timeout máximo
+                    let attempts = 0;
+                    const maxAttempts = 50; // Máximo 2.5 segundos (50 * 50ms)
+                    
                     const checkReady = () => {
+                        attempts++;
                         const wrapperWidth = wrapper.offsetWidth || wrapper.clientWidth;
                         if (wrapperWidth > 0) {
                             updateCarousel();
-                        } else {
+                        } else if (attempts < maxAttempts) {
                             setTimeout(checkReady, 50);
+                        } else {
+                            // Si después de maxAttempts no tiene ancho, usar porcentajes
+                            const offset = currentSlide * 100;
+                            track.style.transform = `translateX(-${offset}%)`;
                         }
                     };
                     checkReady();
                 };
                 
-                // Esperar a que las imágenes se carguen
+                // Esperar a que las imágenes se carguen con timeout
                 if (slides.length > 0) {
                     let imagesLoaded = 0;
+                    let timeoutReached = false;
+                    
+                    // Timeout de seguridad: inicializar después de 3 segundos máximo
+                    const safetyTimeout = setTimeout(() => {
+                        timeoutReached = true;
+                        initCarouselPosition();
+                    }, 3000);
+                    
                     slides.forEach(slide => {
                         const img = slide.querySelector('img');
                         if (img) {
-                            if (img.complete) {
+                            if (img.complete && img.naturalWidth > 0) {
                                 imagesLoaded++;
                             } else {
-                                img.addEventListener('load', () => {
-                                    imagesLoaded++;
-                                    if (imagesLoaded === slides.length) {
-                                        initCarouselPosition();
+                                const onLoad = () => {
+                                    if (!timeoutReached) {
+                                        imagesLoaded++;
+                                        if (imagesLoaded === slides.length) {
+                                            clearTimeout(safetyTimeout);
+                                            initCarouselPosition();
+                                        }
                                     }
-                                });
-                                img.addEventListener('error', () => {
-                                    imagesLoaded++;
-                                    if (imagesLoaded === slides.length) {
-                                        initCarouselPosition();
+                                };
+                                
+                                const onError = () => {
+                                    if (!timeoutReached) {
+                                        imagesLoaded++;
+                                        if (imagesLoaded === slides.length) {
+                                            clearTimeout(safetyTimeout);
+                                            initCarouselPosition();
+                                        }
                                     }
-                                });
+                                };
+                                
+                                img.addEventListener('load', onLoad, { once: true });
+                                img.addEventListener('error', onError, { once: true });
+                                
+                                // Si la imagen ya tiene src pero no se ha cargado, forzar carga
+                                if (img.src && !img.complete) {
+                                    img.load();
+                                }
                             }
                         } else {
                             imagesLoaded++;
@@ -1170,6 +1201,7 @@
                     });
                     
                     if (imagesLoaded === slides.length) {
+                        clearTimeout(safetyTimeout);
                         initCarouselPosition();
                     }
                 } else {
@@ -1208,13 +1240,36 @@
             }
 
             // Cargar carrusel cuando el DOM esté listo
+            function initializeCarousel() {
+                const track = document.getElementById('carouselTrack');
+                const container = document.querySelector('.carousel-container');
+                
+                if (track && container) {
+                    loadCarouselImages();
+                } else {
+                    // Si no están listos, esperar un poco más
+                    setTimeout(initializeCarousel, 100);
+                }
+            }
+            
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', function() {
-                    setTimeout(loadCarouselImages, 100);
+                    setTimeout(initializeCarousel, 200);
                 });
             } else {
-                setTimeout(loadCarouselImages, 100);
+                // Si el DOM ya está listo, esperar un poco para asegurar que todo esté renderizado
+                setTimeout(initializeCarousel, 300);
             }
+            
+            // Fallback: intentar inicializar cuando la ventana se carga completamente
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    const track = document.getElementById('carouselTrack');
+                    if (track && track.children.length === 0) {
+                        loadCarouselImages();
+                    }
+                }, 500);
+            });
         })();
     </script>
     <script type="text/javascript">
