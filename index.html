@@ -247,21 +247,21 @@
         .carousel-track {
             display: flex;
             transition: transform 0.5s ease-in-out;
-            gap: 1rem;
-            padding: 0 10%;
+            gap: 0;
+            padding: 0;
         }
 
         .carousel-slide {
-            min-width: 80%;
+            width: 100%;
             flex-shrink: 0;
             position: relative;
-            opacity: 0.6;
+            opacity: 0;
             transition: opacity 0.3s, transform 0.3s;
         }
 
         .carousel-slide.active {
             opacity: 1;
-            transform: scale(1.05);
+            transform: scale(1);
         }
 
         .carousel-slide img {
@@ -1096,10 +1096,10 @@
                 const nextButton = document.querySelector('.carousel-button.next');
 
                 function updateCarousel() {
-                    // Calcular el desplazamiento (80% del ancho + gap)
-                    const slideWidth = 80; // porcentaje
+                    // Calcular el desplazamiento (100% del ancho para mostrar solo una imagen)
+                    const slideWidth = 100; // porcentaje
                     const offset = currentSlide * slideWidth;
-                    track.style.transform = `translateX(calc(-${offset}% - ${currentSlide * 1}rem))`;
+                    track.style.transform = `translateX(-${offset}%)`;
                     
                     // Actualizar clases active en slides
                     slides.forEach((slide, index) => {
