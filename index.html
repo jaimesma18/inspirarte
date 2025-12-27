@@ -953,7 +953,7 @@
                 (i) => `P${String(i).padStart(4, '0')}`
             ];
             
-            // Función para cargar imágenes dinámicamente (optimizada para velocidad)
+            // Función para cargar imágenes dinámicamente (simplificada y rápida)
             function loadCarouselImages() {
                 const track = document.getElementById('carouselTrack');
                 const dotsContainer = document.getElementById('carouselDots');
@@ -967,19 +967,16 @@
                 const validImages = [];
                 let currentIndex = 1;
                 let consecutiveFailures = 0;
-                const maxConsecutiveFailures = 3; // Detener después de 3 fallos consecutivos
-                let checking = true;
-                const maxImages = 30; // Límite máximo de imágenes
+                const maxConsecutiveFailures = 3;
+                const maxImages = 30;
 
-                function tryLoadNextImage() {
-                    if (!checking || currentIndex > maxImages) {
+                function tryLoadImage(index) {
+                    if (index > maxImages || consecutiveFailures >= maxConsecutiveFailures) {
                         renderCarousel(validImages);
                         return;
                     }
 
-                    // Priorizar el patrón más común: artshow-X.jpg
-                    const imageName = `artshow-${currentIndex}.jpg`;
-                    const fullPath = `images/artshow/${imageName}`;
+                    const fullPath = `images/artshow/artshow-${index}.jpg`;
                     const img = new Image();
                     
                     img.onload = function() {
@@ -988,52 +985,26 @@
                             alt: `Inspirarte Artshow 2025 - Imagen ${validImages.length + 1}`
                         });
                         consecutiveFailures = 0;
-                        currentIndex++;
-                        // Cargar siguiente imagen inmediatamente (sin delay)
-                        tryLoadNextImage();
+                        // Cargar siguiente imagen
+                        tryLoadImage(index + 1);
                     };
                     
                     img.onerror = function() {
-                        // Si falla jpg, probar jpeg
-                        if (consecutiveFailures === 0) {
-                            const img2 = new Image();
-                            img2.onload = function() {
-                                validImages.push({
-                                    src: this.src,
-                                    alt: `Inspirarte Artshow 2025 - Imagen ${validImages.length + 1}`
-                                });
-                                consecutiveFailures = 0;
-                                currentIndex++;
-                                tryLoadNextImage();
-                            };
-                            img2.onerror = function() {
-                                consecutiveFailures++;
-                                if (consecutiveFailures >= maxConsecutiveFailures) {
-                                    checking = false;
-                                    renderCarousel(validImages);
-                                    return;
-                                }
-                                currentIndex++;
-                                tryLoadNextImage();
-                            };
-                            img2.src = `images/artshow/artshow-${currentIndex}.jpeg`;
-                        } else {
-                            consecutiveFailures++;
-                            if (consecutiveFailures >= maxConsecutiveFailures) {
-                                checking = false;
-                                renderCarousel(validImages);
-                                return;
-                            }
-                            currentIndex++;
-                            tryLoadNextImage();
+                        consecutiveFailures++;
+                        if (consecutiveFailures >= maxConsecutiveFailures) {
+                            // Ya no hay más imágenes, renderizar lo que tenemos
+                            renderCarousel(validImages);
+                            return;
                         }
+                        // Intentar siguiente índice
+                        tryLoadImage(index + 1);
                     };
                     
                     img.src = fullPath;
                 }
 
                 // Iniciar la carga
-                tryLoadNextImage();
+                tryLoadImage(1);
             }
 
             function renderCarousel(images) {
@@ -1137,85 +1108,19 @@
                 };
                 window.addEventListener('resize', resizeHandler);
                 
-                // Inicializar posición - esperar a que las imágenes se carguen
-                const initCarouselPosition = () => {
-                    // Esperar a que el wrapper tenga un ancho válido con timeout máximo
-                    let attempts = 0;
-                    const maxAttempts = 50; // Máximo 2.5 segundos (50 * 50ms)
-                    
-                    const checkReady = () => {
-                        attempts++;
-                        const wrapperWidth = wrapper.offsetWidth || wrapper.clientWidth;
-                        if (wrapperWidth > 0) {
-                            updateCarousel();
-                        } else if (attempts < maxAttempts) {
-                            setTimeout(checkReady, 50);
-                        } else {
-                            // Si después de maxAttempts no tiene ancho, usar porcentajes
-                            const offset = currentSlide * 100;
-                            track.style.transform = `translateX(-${offset}%)`;
-                        }
-                    };
-                    checkReady();
-                };
-                
-                // Esperar a que las imágenes se carguen con timeout
-                if (slides.length > 0) {
-                    let imagesLoaded = 0;
-                    let timeoutReached = false;
-                    
-                    // Timeout de seguridad: inicializar después de 3 segundos máximo
-                    const safetyTimeout = setTimeout(() => {
-                        timeoutReached = true;
-                        initCarouselPosition();
-                    }, 3000);
-                    
-                    slides.forEach(slide => {
-                        const img = slide.querySelector('img');
-                        if (img) {
-                            if (img.complete && img.naturalWidth > 0) {
-                                imagesLoaded++;
-                            } else {
-                                const onLoad = () => {
-                                    if (!timeoutReached) {
-                                        imagesLoaded++;
-                                        if (imagesLoaded === slides.length) {
-                                            clearTimeout(safetyTimeout);
-                                            initCarouselPosition();
-                                        }
-                                    }
-                                };
-                                
-                                const onError = () => {
-                                    if (!timeoutReached) {
-                                        imagesLoaded++;
-                                        if (imagesLoaded === slides.length) {
-                                            clearTimeout(safetyTimeout);
-                                            initCarouselPosition();
-                                        }
-                                    }
-                                };
-                                
-                                img.addEventListener('load', onLoad, { once: true });
-                                img.addEventListener('error', onError, { once: true });
-                                
-                                // Si la imagen ya tiene src pero no se ha cargado, forzar carga
-                                if (img.src && !img.complete) {
-                                    img.load();
-                                }
-                            }
-                        } else {
-                            imagesLoaded++;
-                        }
-                    });
-                    
-                    if (imagesLoaded === slides.length) {
-                        clearTimeout(safetyTimeout);
-                        initCarouselPosition();
+                // Inicializar posición inmediatamente
+                function initPosition() {
+                    const wrapperWidth = wrapper.offsetWidth || wrapper.clientWidth;
+                    if (wrapperWidth > 0) {
+                        updateCarousel();
+                    } else {
+                        // Si no tiene ancho todavía, intentar de nuevo en 100ms
+                        setTimeout(initPosition, 100);
                     }
-                } else {
-                    initCarouselPosition();
                 }
+                
+                // Inicializar después de un pequeño delay para asegurar que el DOM esté listo
+                setTimeout(initPosition, 100);
 
                 function nextSlide() {
                     currentSlide = (currentSlide + 1) % totalSlides;
